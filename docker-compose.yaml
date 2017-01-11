@@ -24,10 +24,11 @@ services:
       db-net:
 
   otree:
-    # uncomment if you want to build an image locally
-    # if using Docker Hub, leave this line commented out:
+    # if using Docker Hub, leave "build: ./" commented out.
+    # if you want to build an image locally, uncomment it.
+
     # build: ./
-    image: otree
+    image: YourDockerUsername/YourRepo:latest
     environment:
       DATABASE_URL: "postgres://${PG_USER}:${PG_PASSWORD}@database/${PG_DATABASE}"
       OTREE_ADMIN_PASSWORD: ${OTREE_ADMIN_PASSWORD}
