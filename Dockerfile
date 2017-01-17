@@ -16,7 +16,7 @@ RUN apk -U add --no-cache postgresql-dev gcc musl-dev curl \
     && chmod +x /opt/otree/entrypoint.sh \
     && apk del postgresql-dev gcc musl-dev curl
 
-RUN echo "oTree: /usr/local/bin/otree runprodserver --port=80"> /Procfile
+RUN echo "oTree: /bin/bash -c 'cd /opt/otree && otree runprodserver --port=80'"> /Procfile
 
 WORKDIR /opt/otree
 VOLUME /opt/init
