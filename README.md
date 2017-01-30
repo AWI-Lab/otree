@@ -1,4 +1,4 @@
-#oTree Projects
+#oTree Projects [![Build Status](https://travis-ci.org/AWI-Lab/otree.svg?branch=master)](https://travis-ci.org/AWI-Lab/otree)
 ##AWI-Lab, Alfred-Weber-Institut für Wirtschaftswissenschaften
 _Universität Heidelberg_
 
