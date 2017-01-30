@@ -55,13 +55,13 @@ AWS_SECRET_ACCESS_KEY = environ.get('AWS_SECRET_ACCESS_KEY')
 
 
 # e.g. EUR, CAD, GBP, CHF, CNY, JPY
-REAL_WORLD_CURRENCY_CODE = 'USD'
+REAL_WORLD_CURRENCY_CODE = 'EUR'
 USE_POINTS = True
 
 
 # e.g. en, de, fr, it, ja, zh-hans
 # see: https://docs.djangoproject.com/en/1.9/topics/i18n/#term-language-code
-LANGUAGE_CODE = 'en'
+LANGUAGE_CODE = 'de'
 
 # if an app is included in SESSION_CONFIGS, you don't need to list it here
 INSTALLED_APPS = ['otree']
