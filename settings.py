@@ -6,6 +6,8 @@ from boto.mturk import qualification
 
 import otree.settings
 
+from session_configs import SESSION_CONFIGS
+
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -135,21 +137,6 @@ SESSION_CONFIG_DEFAULTS = {
     'doc': "",
     'mturk_hit_settings': mturk_hit_settings,
 }
-
-SESSION_CONFIGS = [
-    {
-        'name': 'public_goods',
-        'display_name': "Public Goods",
-        'num_demo_participants': 3,
-        'app_sequence': ['public_goods', 'payment_info'],
-    },
-    {
-        'name': 'outcome_bias',
-        'display_name': 'Outcome Bias Add On',
-        'app_sequence': ['outcomebias'],
-        'num_demo_participants': 6
-    }
-]
 
 # anything you put after the below line will override
 # oTree's default settings. Use with caution.
