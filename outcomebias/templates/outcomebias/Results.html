@@ -1,0 +1,40 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+   	Results
+{% endblock %}
+
+{% block content %}
+
+	{% if player.role == "agent" %}
+		<p>You are <b>Player A</b>.</p>
+	{% else %}
+		<p>You are <b>Player B</b>.</p>
+	{% endif %}
+
+	<p>The winning color is: {{ group.winning_color }}<br>
+	{% if group.lottery_outcome == "good" %}
+		The color of the ball drawn from the virtual urn is: {{ group.winning_color }}<br>
+		The colors match.
+	{% else %}
+		{% if group.winning_color == "yellow" %}
+			The color of the ball drawn from the virtual urn is: orange<br>
+		{% else %}
+			The color of the ball drawn from the virtual urn is: yellow<br>
+		{% endif %}
+		The colors do not match.
+	{% endif %}
+	</p>
+
+	<p>Player B receives an additional {{ group.lottery_pay }} points from the lottery.<p>
+	<p>For this outcome, Player B has decided to send {{ group.reward }} points to Player A.</p>
+
+	<p>Your final payoff for is: {{player.payoff}}<p>
+
+	<p>Thank you very much for participating in this experiment.</p>
+
+    {% next_button %}
+{% endblock %}
+
+
