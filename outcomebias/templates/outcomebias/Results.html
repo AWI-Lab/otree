@@ -7,19 +7,23 @@
 
 {% block content %}
 
+	<p><b>Role</b><br>
 	{% if player.role == "agent" %}
-		<p>You are <b>Player A</b>.</p>
+		You are <b>Player A</b>.
 	{% else %}
-		<p>You are <b>Player B</b>.</p>
-	{% endif %}
+		You are <b>Player B</b>.
+	{% endif %}</p>
 
-	<p>The winning color is: {{ group.winning_color }}<br>
+	<p><b>Decision</b><br><b>{% if group.treatment == "agent" %}Player A {% else %} The computer {% endif %}</b>
+	has selected <b>{{ group.winning_color }}</b> to be the winning color.<br>
+	
+	<p><b>Outcome</b><br>
 	{% if group.lottery_outcome == "good" %}
 		The color of the ball drawn from the virtual urn is: {{ group.winning_color }}<br>
 		The colors match.
 	{% else %}
 		{% if group.winning_color == "yellow" %}
-			The color of the ball drawn from the virtual urn is: orange<br>
+			The color of the ball drawn from the virtual urn is: green<br>
 		{% else %}
 			The color of the ball drawn from the virtual urn is: yellow<br>
 		{% endif %}
@@ -30,11 +34,23 @@
 	<p>Player B receives an additional {{ group.lottery_pay }} points from the lottery.<p>
 	<p>For this outcome, Player B has decided to send {{ group.reward }} points to Player A.</p>
 
-	<p>Your final payoff for is: {{player.payoff}}<p>
+	<p>Player A's final payoff is: {{ group.a_payoff }}<br>
+	Player B's final payoff is: {{ group.b_payoff }}</p>
 
-	<p>Thank you very much for participating in this experiment.</p>
 
-    {% next_button %}
+	{% if player.role == "principal" %}
+		<p><b>Evaluation</b></p>
+		{% if group.treatment == "agent" %}
+			{% formfield player.decision_satisfaction with label="How satisfied are you with the <u>color choice</u> of Player A? (1 = very dissatisfied, 7 = very satisfied)" %}
+		{% else %}
+			{% formfield player.decision_satisfaction with label="How satisfied are you with the <u>color choice</u> by the computer? (1 = very dissatisfied, 7 = very satisfied)" %}
+		{% endif %}
+		{% formfield player.outcome_satisfaction with label="How satisfied are you with the <u>outcome</u> of the lottery? (1 = very dissatisfied, 7 = very satisfied)" %}
+	{% endif %}
+
+
+	{% next_button %}
+
 {% endblock %}
 
 
