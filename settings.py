@@ -68,7 +68,7 @@ LANGUAGE_CODE = 'de'
 # if an app is included in SESSION_CONFIGS, you don't need to list it here
 INSTALLED_APPS = ['otree']
 
-# SENTRY_DSN = ''
+SENTRY_DSN = 'http://a0b93409502144feac6a2dc11c3372a2:c6b0fa22b9b04e9c8823f1179897ec21@sentry.otree.org/122'
 
 DEMO_PAGE_INTRO_TEXT = """
 <ul>
