@@ -8,8 +8,9 @@ script:
   - python -c 'import settings'
   - otree test
 env:
-  - DATABASE_URL=postgres://postgres@localhost/travis_ci_test
-  - DJANGO_SETTINGS_MOULE=settings
+  global:
+    - DATABASE_URL=postgres://postgres@localhost/travis_ci_test
+    - DJANGO_SETTINGS_MODULE=otree.settings
 after_success:
   - >
     [ "$TRAVIS_BRANCH" == "master" ]
