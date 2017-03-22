@@ -16,32 +16,39 @@ http://getbootstrap.com/components/
 
 -->
 
-	<p>Thank you very much for logging on to participate in this experiment. We kindly ask you to focus on the experiment and make sure not to be distracted in the next 10 minutes. Throughout the session you will receive points, which are exchanged for Euros at a rate of 100 Points = 1€ for final payments.
-	</p>
+	<p>Thank you very much for participating in this experiment. We kindly ask you to focus on the experiment and make sure not to be distracted in the next 10 minutes. Throughout the session you will receive points, which are exchanged for Euros at a rate of 100 Points = 1€ for final payments.
+	</p><p>&nbsp;</p>
 
-	<p>
+	<p><b>Roles</b><br>
 You have been matched with another participant who is currently logged on. One of you will take on the role of Player A, while the other one will be Player B. Whether you take part as Player A or Player B is randomly determined by the computer. <b>Both, Player A and Player B start out with 100 points each. </b>
-	</p>
+	</p><p>&nbsp;</p>
 
-	<p>
-	A virtual urn contains an equal number of green and yellow balls, one of which is drawn from the urn later.<p>
+
+	<p><b>Decisions</b><br>
+	A risky lottery will determine the payoff of Player B. The lottery is represented by a 
+	virtual urn, which contains an equal number of green and yellow balls. One of the balls will be drawn from the urn later.<p>
 	
 	<p>
 	{% if group.treatment == "agent" %}
-		<b>Player A</b> decides which one of the two colors - yellow or green - is the winning color.
+		<b>Player A</b> will decide which one of the two colors - yellow or green - is the winning color.
 	{% else %}
 		<b>The computer</b> decides which one of the two colors - yellow or green - is the winning color.
 	{% endif %}
 	</p>
 
 	<p>
-	If the color of the ball drawn from the urn is the same as the winning color, <b>Player B</b> receives an additional <b>300 points.</b> <br>
-If the color of the ball drawn from the urn is <u>not</u> the same as the winning color, <b>Player B</b> receives an additional <b>100 points</b>.
+	If the color of the ball drawn from the urn matches the winning color chosen by {% if group.treatment == "agent" %}Player A{% else %}the computer{% endif %}, <b>Player B</b> receives an additional <b>300 points.</b> <br>
+If the color of the ball drawn from the urn does <u>not</u> match the winning color chosen by {% if group.treatment == "agent" %}Player A{% else %}the computer{% endif %}, <b>Player B</b> receives an additional <b>100 points</b>.
 	</p>
 
-	<p><b>Player B</b> has the opportunity to send points to Player A. Player B can choose any number of points between 0 and 100. Each point send to Player A reduces Player B’s payoff, while simultaneously increasing Player A’s payoff in a one-to-one fashion. Because the ball has not been drawn from the virtual urn at this point, Player B decides how many points to send to Player A for each of the two possible outcomes of the lottery.</p>
+	<p>
+	<b>Player B</b> learns about the winning color selected by 
+	{% if group.treatment == "agent" %} Player A {% else %} the computer {% endif %} and then
+	has the opportunity to send points to Player A. Player B can choose any number of points between 0 and 100. Each point send to Player A reduces Player B’s payoff, while simultaneously increasing Player A’s payoff point for point. Because the ball has not been drawn from the virtual urn when making the decision, Player B decides how many points to send to Player A for each of the two possible outcomes of the lottery.</p><p>&nbsp;</p>
 
-	<p>Finally, a ball is drawn from the virtual urn and its color is revealed. Player B then receives the additional points from the lottery and Player A receives any points send to him by Player B. This concludes the experiment.</p>
+
+	<p><b>Payoffs</b><br>
+	Finally, a ball is drawn from the virtual urn and its color is revealed. Player B then receives the  points from the lottery in addition to his 100 point endowment. Any points sent to Player A are subtracted. Player A receives any points sent to him by Player B in addition to his 100 point endowment. This concludes the experiment.</p>
 
 	<p>&nbsp;</p>
 

@@ -39,12 +39,15 @@ class WinningColorChoice(Page):
 	def is_displayed(self):
 		return self.group.intact and self.group.treatment == 'agent' and self.player.role() == 'agent'
 
+class ColorChoiceWaitPage(WaitPage):
+	template_name = 'outcomebias/MyWaitPage.html'
+	title_text = "Please Wait"
+
 class RewardDecision(Page):
 	form_model = models.Group
 	form_fields = ['reward_good', 'reward_bad']
 
 	timeout_seconds = Constants.decision_timeout
-	timeout_submission = {'reward_good': 0, 'reward_bad': 0}
 
 	def before_next_page(self):
 		if self.timeout_happened:
@@ -54,6 +57,21 @@ class RewardDecision(Page):
 	def is_displayed(self):
 		return self.group.intact and self.player.role() == 'principal'
 
+class Expectation(Page):
+	def is_displayed(self):
+		return self.group.intact and self.player.role() == 'agent'
+
+	def before_next_page(self):
+		if self.timeout_happened:
+			self.player.timed_out = True
+			self.group.intact = False
+
+	form_model = models.Player
+	form_fields = ['expected_transfer_good', 'expected_transfer_bad']
+
+	timeout_seconds = Constants.decision_timeout
+
+
 class ResultsWaitPage(WaitPage):
 	template_name = 'outcomebias/MyWaitPage.html'
 	title_text = "Please Wait"
@@ -62,8 +80,41 @@ class ResultsWaitPage(WaitPage):
 		self.group.set_payoffs()
 
 class Results(Page):
+	timeout_seconds = Constants.decision_timeout
+
+	form_model = models.Player
+
+	def get_form_fields(self):
+		if self.player.role() == 'principal':
+			return ['outcome_satisfaction', 'decision_satisfaction']
+		else:
+			return []
+
 	def is_displayed(self):
 		return self.group.intact
+
+
+class Demographics(Page):
+	def is_displayed(self):
+		return self.group.intact
+
+	form_model = models.Player
+	form_fields = ['age', 'gender', 'education', 'studies', 'occupation']
+
+	timeout_seconds = Constants.long_timeout
+
+	def error_message(self, values):
+		if values['education'] >= 3 and not values['studies'] :
+			return 'Please provide your field of studies.'
+
+
+class Payment(Page):
+	def is_displayed(self):
+		return self.group.intact
+
+	def vars_for_template(self):
+		return {'money_to_pay': self.participant.payoff_plus_participation_fee()}
+
 
 class Failure(Page):
 	def is_displayed(self):
@@ -73,8 +124,12 @@ page_sequence = [
 	Arrival,
 	Welcome,
 	WinningColorChoice,
+	ColorChoiceWaitPage,
 	RewardDecision,
+	Expectation,
 	ResultsWaitPage,
 	Results,
+	Demographics,
+	Payment,
 	Failure
 ]
