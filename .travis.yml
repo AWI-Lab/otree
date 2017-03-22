@@ -2,10 +2,12 @@ language: python
 python: 3.5
 install:
   - pip install -r requirements.txt
+virutalenv:
+  system-side-packages: true
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
 script:
-  - python -c 'import test_settings'
+  - pip list
   - otree test
 env:
   global:
