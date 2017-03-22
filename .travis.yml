@@ -2,17 +2,17 @@ language: python
 python: 3.5
 install:
   - pip install -r requirements.txt
-virutalenv:
-  system-side-packages: true
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
 script:
-  - pip list
   - otree test
 env:
   global:
     - DATABASE_URL=postgres://postgres@localhost/travis_ci_test
-    - DJANGO_SETTINGS_MODULE=test_settings
+
+    # do not load /etc/boto.cfg with Python 3 incompatible plugin
+    # https://github.com/travis-ci/travis-ci/issues/5246#issuecomment-166460882
+    - BOTO_CONFIG=/doesnotexist
 after_success:
   - >
     [ "$TRAVIS_BRANCH" == "master" ]
