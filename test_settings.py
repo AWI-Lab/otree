@@ -10,8 +10,9 @@ from session_configs import SESSION_CONFIGS
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-
-DEBUG = True
+# the environment variable OTREE_PRODUCTION controls whether Django runs in
+# DEBUG mode. If OTREE_PRODUCTION==1, then DEBUG=False
+DEBUG = False
 
 # don't share this with anybody.
 SECRET_KEY = 'secret_key'
@@ -45,11 +46,16 @@ ADMIN_USERNAME = 'admin'
 # for security, best to set admin password in an environment variable
 ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
 
+
+# setting for integration with AWS Mturk
+AWS_ACCESS_KEY_ID = environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = environ.get('AWS_SECRET_ACCESS_KEY')
+
+
 # e.g. EUR, CAD, GBP, CHF, CNY, JPY
 REAL_WORLD_CURRENCY_CODE = 'EUR'
 USE_POINTS = True
 
-mturk_hit_settings = {}
 
 # e.g. en, de, fr, it, ja, zh-hans
 # see: https://docs.djangoproject.com/en/1.9/topics/i18n/#term-language-code
@@ -57,6 +63,64 @@ LANGUAGE_CODE = 'de'
 
 # if an app is included in SESSION_CONFIGS, you don't need to list it here
 INSTALLED_APPS = ['otree']
+
+SENTRY_DSN = 'http://a0b93409502144feac6a2dc11c3372a2:c6b0fa22b9b04e9c8823f1179897ec21@sentry.otree.org/122'
+
+DEMO_PAGE_INTRO_TEXT = """
+<ul>
+    <li>
+        <a href="https://github.com/oTree-org/otree" target="_blank">
+            oTree on GitHub
+        </a>.
+    </li>
+    <li>
+        <a href="http://www.otree.org/" target="_blank">
+            oTree homepage
+        </a>.
+    </li>
+</ul>
+<p>
+    Here are various games implemented with oTree. These games are all open
+    source, and you can modify them as you wish.
+</p>
+"""
+
+ROOMS = [
+    {
+        'name': 'econ101',
+        'display_name': 'Econ 101 class',
+        'participant_label_file': '_rooms/econ101.txt',
+    },
+    {
+        'name': 'live_demo',
+        'display_name': 'Room for live demo (no participant labels)',
+    },
+]
+
+
+# from here on are qualifications requirements for workers
+# see description for requirements on Amazon Mechanical Turk website:
+# http://docs.aws.amazon.com/AWSMechTurk/latest/AWSMturkAPI/ApiReference_QualificationRequirementDataStructureArticle.html
+# and also in docs for boto:
+# https://boto.readthedocs.org/en/latest/ref/mturk.html?highlight=mturk#module-boto.mturk.qualification
+
+mturk_hit_settings = {
+    'keywords': ['easy', 'bonus', 'choice', 'study'],
+    'title': 'Title for your experiment',
+    'description': 'Description for your experiment',
+    'frame_height': 500,
+    'preview_template': 'global/MTurkPreview.html',
+    'minutes_allotted_per_assignment': 60,
+    'expiration_hours': 7*24, # 7 days
+    #'grant_qualification_id': 'YOUR_QUALIFICATION_ID_HERE',# to prevent retakes
+    'qualification_requirements': [
+        # qualification.LocaleRequirement("EqualTo", "US"),
+        # qualification.PercentAssignmentsApprovedRequirement("GreaterThanOrEqualTo", 50),
+        # qualification.NumberHitsApprovedRequirement("GreaterThanOrEqualTo", 5),
+        # qualification.Requirement('YOUR_QUALIFICATION_ID_HERE', 'DoesNotExist')
+    ]
+}
+
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
 # in SESSION_CONFIGS, except those that explicitly override it.
