@@ -10,7 +10,7 @@ script:
 env:
   global:
     - DATABASE_URL=postgres://postgres@localhost/travis_ci_test
-    - DJANGO_SETTINGS_MODULE=otree.settings
+    - DJANGO_SETTINGS_MODULE=test_settings
 after_success:
   - >
     [ "$TRAVIS_BRANCH" == "master" ]
