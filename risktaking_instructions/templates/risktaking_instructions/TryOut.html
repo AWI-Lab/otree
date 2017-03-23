@@ -1,0 +1,362 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+
+{% block title %}
+	Proberunde
+{% endblock %}
+
+{% block styles %}
+	<style type="text/css">
+	 	#bar_container {
+	 		text-align: center;
+	 		width: 100%;
+	 	}
+
+		#buttonbox {
+			text-align: center;
+		}
+
+		#info {
+			font-weight: bold;
+			font-size: 20px;
+		}
+
+		#next_box {
+			text-align: center;
+		}
+
+		#bar {
+			width: 50%;
+			display: inline-block;
+		}
+
+		#countdown {
+			text-align: right;
+		}
+		.page-header {
+			padding-top: 0px !important;
+			padding-bottom: 0px !important;
+			margin-top: 0px !important;
+			margin-bottom: 10px !important;
+		}
+	</style>
+{% endblock%}
+	
+
+{% block scripts %}
+	<script src="{% static "risktaking/highcharts/highcharts.js" %}"></script>
+	<script src="{% static "risktaking/highcharts/modules/exporting.js" %}"></script>
+	<script type="text/javascript">
+
+		$(function () {
+			Trial = new PracticeBar("instructions", "info", "counter", "msg", "action_button", "next_box");
+			Trial.prepare({
+				mode: {{ mode }},
+				default: {{ default }},
+				step_size: {{ big_step }},
+				interval: {{ interval }},
+				max_repititions: 3,
+				targets: [88, 76, 99]
+			});
+			Trial.run();
+		});
+
+		function PracticeBar(instructions, info, counter, msg, button, next_box) {
+
+			this.instr = $('#'+instructions)
+			this.btn = $('#'+button);
+			this.info = $('#'+info);
+
+			this.msg = $('#'+msg);
+			this.counter = $('#'+counter);
+
+			this.next = $('#'+next_box);
+			this.repetition = 0;
+			this.first_round = true;
+
+			this.prepare = function (settings) {
+				this.mode = settings.mode;
+				this.default = settings.default;
+
+				this.step_size = settings.step_size;
+				this.interval = settings.interval; // seconds between adjustments
+
+				this.min = 0.0;
+				this.max = 120;
+
+				this.target_value = settings.targets[this.repetition];
+
+				this.running = false;
+				this.user_has_acted = false;
+				this.interval_id = null;
+
+				this.max_repititions = settings.max_repititions;
+				this.in_target_area = false;
+
+				this.settings = settings;
+
+				self = this;
+
+				if (this.default == "Safe") {
+					this.current_value = this.max / 2;
+					this.target_value_2 = this.target_value + this.step_size + 1;
+				} else {
+					this.current_value = this.max;
+					this.target_value_2 = this.target_value - this.step_size;
+				}
+			
+				if (this.mode == "Active") {
+					this.btn.text("Punktezahl anpassen");
+				} else {
+					this.btn.text("Anpassung stoppen");
+				}
+
+				this.next.addClass("hidden");
+
+				this.chart = new Highcharts.chart('bar', {
+					chart: {
+						type: 'column'
+					},
+					drilldown: {
+						allowPointDrilldown: false
+					},
+					legend: {
+						enabled: false
+					},
+					title: {
+						text: ''
+					},
+					credits: { 
+						enabled: false 
+					},
+					exporting: {
+						enabled: false
+					},
+					tooltip: {
+						enabled: false
+					},
+					xAxis: {
+						categories: [
+							'Grün'
+						],
+						crosshair: false
+					},
+					yAxis: {
+						min: this.min,
+						max: this.max + 10,
+						title: {
+							text: 'Punkte'
+						},
+						plotLines: [{
+							color: 'red',
+							label: 'Target',
+							value: this.target_value,
+							width: 1
+						},
+						{
+							color: 'red',
+							label: 'Target',
+							value: this.target_value_2,
+							width: 1
+						}]
+					},
+					plotOptions: {
+						column: {
+							pointPadding: 0.2,
+							borderWidth: 0
+						}
+					},
+					series: [
+						{
+							name: 'Lottery',
+							data: [ this.current_value ],
+							colorByPoint: true,
+							colors: ['green'],
+							dataLabels: {
+								enabled: true,
+								style: {
+									fontSize: "14px"
+								}
+							}
+						}
+					]
+				});
+			}
+
+			this.user_click = function () {
+				if (!this.running) {
+					return false;
+				}
+
+				this.user_has_acted = true;
+				this.btn.addClass("hidden");
+				this.msg.text("Anpassung erfolgt in: ");
+
+
+				if (this.mode == "Passive") {
+					this.stop();
+				}
+			}
+
+			this.make_step = function () {
+				this.step += 1;
+
+
+				if (this.default == "Safe") {
+					this.current_value += this.step_size;
+
+					// check if in target area
+					if (this.current_value >= this.target_value && this.current_value < (this.target_value + this.step_size)) {
+						// in target area
+						console.log(this.current_value);
+						this.in_target_area = true;
+					} else {
+						this.in_target_area = false;
+					}
+
+					this.update_bar();
+
+					if (this.current_value >= this.max) {
+						// reached the top - fail
+						this.stop();
+						return false;
+					}
+
+				} else {
+					this.current_value -= this.step_size;
+
+					// check if in target area
+					if (this.current_value <= this.target_value && this.current_value >= (this.target_value - this.step_size)) {
+						// in target area
+						console.log(this.current_value);
+						this.in_target_area = true;
+					} else {
+						this.in_target_area = false;
+					}
+
+					this.update_bar();
+
+					if (this.current_value <= this.min) {
+						// reached the bottom - fail
+						this.stop();
+						return false;
+					}
+				}
+
+			}
+
+			this.run = function () {
+				var timeout = 2; // seconds
+				if (this.first_round) {
+					timeout = 10; //seconds
+					this.first_round = false;
+				} 
+
+				this.repetition += 1;
+				window.setTimeout(function() {
+					self.running = true;
+					self.seconds_left = self.interval;
+					self.msg.text("Verbleibende Zeit: ");
+					self.counter.text(self.seconds_left + " Sekunden");
+					self.info.addClass("hidden");
+					self.btn.removeClass("hidden");
+					self.interval_id = window.setInterval(function () {
+						self.seconds_left -= 1;
+						self.counter.text(self.seconds_left + " Sekunden");
+						if (self.seconds_left <= 0) {
+							if (self.mode == "Passive") {
+								self.make_step();
+							} else { // mode == active
+								if (self.user_has_acted) {
+									self.make_step();
+									self.user_has_acted = false;
+								} else { // not acted
+									self.stop();
+								}
+							}
+							if (self.running) {
+								self.seconds_left = self.interval;
+								self.msg.text("Verbleibende Zeit: ");
+								self.counter.text(self.seconds_left + " Sekunden");
+								self.btn.removeClass("hidden");
+							}
+						} 
+					}, 1000);
+				}, timeout * 1000);
+			}
+
+			this.stop = function () {
+				window.clearInterval(this.interval_id);
+				this.interval_id = null;
+				this.running = false;
+				this.info.text("stopped"); // NEEDS TO BE FIXED!
+				this.btn.addClass("hidden");
+
+				// we need to check if successful. if yes, try again up to max rep.
+				// if not successful, try again, do not count against amx rep (?)
+
+				if (!this.in_target_area) {
+					this.repetition -= 1;
+				}
+
+				if (this.repetition < this.max_repititions) {
+					// go on
+					this.new_round(this.in_target_area);
+				} else {
+					// info ended, show next button
+					this.info.text("Sehr gut. Sie können das Experiment fortsetzen.");
+					this.info.removeClass("hidden");
+					this.counter.text("");
+					this.msg.text("Die Zeit ist abgelaufen.");
+					this.next.removeClass("hidden");
+				}
+			}
+
+			this.new_round = function (success) {
+				// tba: show different messages for "success" and failure
+				
+				if (success) {
+					if (this.repetition == 1) {
+						this.info.text("Sehr gut. Versuchen Sie es noch einmal! (1 von 3)");
+					} else if (this.repetition == 2) {
+						this.info.text("Sehr gut. Versuchen Sie es noch einmal! (2 von 3)");
+					} 
+				} else {
+					this.info.text("Der Balken endete nicht im Zielbereich. Versuchen Sie es noch einmal!");
+				}
+				this.info.removeClass("hidden");
+
+				window.setTimeout(function () {
+					self.prepare(self.settings);
+					self.run();
+				}, 3000);
+			}
+
+			this.update_bar = function () {
+				this.chart.series[0].setData([this.current_value]);
+			}
+		}	
+	</script>
+{% endblock%}
+
+
+{% block content %}
+	<p id="instructions"></p>
+	<div id="countdown">
+		<span id="msg">Die Proberunde beginnt in ca. 10 Sekunden.</span><span id="counter"></span>
+	</div>
+	<div id="bar_container">
+		<div id="bar"></div>
+	</div>
+
+	<div id="buttonbox">
+		<span id="info">Machen Sie sich bereit!</span><br>
+		<button type="button" class="btn btn-primary btn-large hidden" id="action_button"
+		onclick="Trial.user_click();"></button><br>
+	</div>
+	
+	<div id="next_box">
+		{% next_button %}
+	</div>
+{% endblock %}

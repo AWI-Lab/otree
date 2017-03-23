@@ -1,0 +1,318 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+	Runde {{ round_number }} von {{ max_rounds }}
+{% endblock %}
+
+{% block styles %}
+	<style type="text/css">
+		#buttonbox {
+			text-align: center;
+		}
+
+		#info {
+			
+			font-weight: bold;
+			font-size: 20px;
+		}
+
+		#next_box {
+			text-align: center;
+		}
+
+		#countdown {
+			text-align: right;
+		}
+
+		.green {
+			color: green;
+		}
+
+		.yellow {
+			color: orange;
+		}
+
+		.page-header {
+			padding-top: 0px !important;
+			padding-bottom: 0px !important;
+			margin-top: 0px !important;
+			margin-bottom: 10px !important;
+		}
+
+		.smalltext {
+			font-size: 12px;
+		}
+	</style>
+{% endblock %}
+
+{% block scripts %}
+
+	<script src="{% static "risktaking/highcharts/highcharts.js" %}"></script>
+	<script src="{% static "risktaking/highcharts/modules/exporting.js" %}"></script>
+	<script type="text/javascript">
+
+		$(function () {
+		    
+		    Adj = new LotteryAdjuster("action_button", "info", "counter", "msg", "next_box", "id_low_payoff", "id_high_payoff");
+		    Adj.prepare({
+		    	default: {{ default }},
+		    	mode: {{ mode }},
+		    	small_step: {{ small_step }},
+		    	big_step: {{ big_step }},
+		    	max_steps: {{ max_steps }},
+		    	min: 0.0,
+		    	interval: {{ interval }},
+		    	round: {{ round_number }},
+		    	outcome: {{ lottery_outcome }}
+		    });
+		    Adj.run();
+		});
+
+
+		function LotteryAdjuster(btn, info, counter, msg, next, lowinput, highinput) {
+
+			this.btn = $('#'+btn);
+			this.info = $('#'+info);
+			this.next = $('#'+next);
+			this.counter = $('#'+counter);
+			this.msg = $('#'+msg);
+
+			this.low_pay = $('#'+lowinput);
+			this.high_pay = $('#'+highinput);
+
+		    this.prepare = function (settings) {
+		    	this.mode = settings.mode;
+		    	this.default = settings.default;
+
+		    	this.small_step = settings.small_step;
+				this.big_step = settings.big_step;
+
+				this.max_steps = settings.max_steps;
+
+				this.min = settings.min;
+				this.max = this.max_steps * (this.small_step + this.big_step)
+			
+				this.interval = settings.interval; // seconds between adjustments
+
+				if (this.default == "Safe") {
+					this.current_values = [
+						this.max_steps * this.small_step,
+						this.max_steps * this.small_step
+					]
+				} else {
+					this.current_values = [
+						this.min,
+						this.max
+					]
+				}
+
+				this.step = 0;
+				this.running = false;
+				this.user_has_acted = false;
+				this.interval_id = null;
+
+				this.round = settings.round;
+				this.outcome = settings.outcome;
+
+				self = this;
+
+				if (this.mode == "Active") {
+					this.btn.text("Lotterie anpassen");
+				} else {
+					this.btn.text("Anpassung stoppen");
+				}
+
+
+				this.chart = new Highcharts.chart('lottery1', {
+			        chart: {
+			            type: 'column'
+			        },
+			        drilldown: {
+			        	allowPointDrilldown: false
+			        },
+			        legend: {
+			        	enabled: false
+			        },
+			        title: {
+			            text: 'Aktuelle Lotterie'
+			        },
+			        credits: { 
+						enabled: false 
+					},
+					exporting: {
+						enabled: false
+					},
+					tooltip: {
+						enabled: false
+					},
+			        xAxis: {
+			            categories: [
+			                'Grün', 'Gelb'
+			            ],
+			            crosshair: false
+			        },
+			        yAxis: {
+			            min: this.min,
+			            max: this.max,
+			            title: {
+			                text: 'Auszahlungen'
+			            }
+			        },
+			        plotOptions: {
+			            column: {
+			                pointPadding: 0.2,
+			                borderWidth: 0
+			            }
+			        },
+			        series: [
+			        	{
+			            	name: 'Lottery',
+			            	data: this.current_values,
+			            	colorByPoint: true,
+			            	colors: ['green', 'orange'],
+			            	dataLabels: {
+			            		enabled: true,
+			            		style: {
+			            			fontSize: "14px"
+			            		}
+			            	}
+						}
+					]
+			    });
+		    }
+
+			this.make_step = function () {
+				this.step += 1;
+
+				var left = this.current_values[0];
+				var right = this.current_values[1];
+
+				if (this.default == "Safe") {
+					left -= this.small_step;
+					right += this.big_step;
+				} else {
+					left += this.small_step;
+					right -= this.big_step;
+				}
+
+				this.current_values = [left, right];
+				this.update_chart()
+
+				if (this.step >= this.max_steps) {
+					this.stop();
+					return false;
+				}
+			}
+
+			this.run = function () {
+				var timeout = 10; // seconds
+
+				window.setTimeout(function () {
+					self.running = true;
+					self.seconds_left = self.interval;
+					self.msg.text("Verbleibende Zeit: ");
+					self.counter.text(self.seconds_left + " Sekunden");
+					self.info.addClass("hidden");
+					self.btn.removeClass("hidden");
+					self.interval_id = window.setInterval(function() {
+						self.seconds_left -= 1;
+						self.counter.text(self.seconds_left + " Sekunden");
+						if (self.seconds_left <= 0) {
+							if (self.mode == "Passive") {
+								self.make_step();
+							} else { // mode == active
+								if (self.user_has_acted) {
+									self.make_step();
+									self.user_has_acted = false;
+								} else {
+									self.stop();
+								}
+							}
+							if (self.running) {
+								self.seconds_left = self.interval;
+								self.msg.text("Verbleibende Zeit: ");
+								self.counter.text(self.seconds_left + " Sekunden");
+								self.btn.removeClass("hidden");
+							}
+						}
+
+					}, 1000);
+				}, timeout * 1000);
+			}
+
+			this.stop = function() {
+				window.clearInterval(this.interval_id);
+				this.interval_id = null;
+				this.running = false;
+
+				var msg = "";
+				if (this.round > 3) {
+					msg = "Die Lotterie wurde festgelegt. ";
+					if (this.outcome == "high") {
+						msg += "Es wurde <span class='yellow'>gelb</span> gezogen.";
+					} else {
+						msg += "Es wurde <span class='green'>grün</span> gezogen.";
+					}
+				} else {
+					msg = "Die Lotterie wurde festgelegt.";
+				}
+				this.info.html(msg);
+				this.info.removeClass("hidden");
+				this.counter.text("");
+				this.msg.text("Die Zeit ist abgelaufen.");
+				this.low_pay.val(this.current_values[0]);
+				this.high_pay.val(this.current_values[1]);
+				this.btn.addClass("hidden");
+				this.next.removeClass("hidden");
+			}
+
+			this.update_chart = function() {
+				this.chart.series[0].setData(this.current_values);
+			}
+			
+
+			this.user_click = function() {
+				if (!this.running) {
+					return false;
+				}
+
+				this.user_has_acted = true;
+				this.btn.addClass("hidden");
+				this.msg.text("Anpassung erfolgt in: ");
+
+				if (this.mode == "Passive") {
+					this.stop();
+				}
+			}
+					
+		}
+
+	</script>
+
+{% endblock %}
+
+{% block content %}
+	{% if round_number > "3" %}
+		<p class="smalltext"><em>Sie erhalten sofort Feedback über den Ausgang der Lotterie.</em></p>
+	{% else %}
+		<p class="smalltext"><em>Sie erhalten erst am Ende des Experiments Feedback über den Ausgang der Lotterie.</em></p>
+	{% endif %}
+	<div id="countdown">
+		<span id="msg">Die Runde beginnt in ca. 10 Sekunden.</span><span id="counter"></span>
+	</div>
+
+	<div id="lottery1"></div>
+	<div id="buttonbox">
+		<span id="info">Machen Sie sich bereit!</span><br>
+		<button type="button" class="btn btn-primary btn-large hidden" id="action_button"
+		onclick="Adj.user_click();"></button><br>
+	</div>
+    <div id="next_box" class="hidden">
+    	<input type="hidden" name="low_payoff" id="id_low_payoff" value="">
+    	<input type="hidden" name="high_payoff" id="id_high_payoff" value="">
+    	{% next_button %}
+    </div>
+{% endblock %}
+
+

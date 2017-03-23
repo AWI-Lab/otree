@@ -1,0 +1,28 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+	Fragebogen
+{% endblock %}
+
+{% block styles %}
+	<style type="text/css"> 
+		.page-header {
+			padding-top: 0px !important;
+			padding-bottom: 0px !important;
+			margin-top: 0px !important;
+			margin-bottom: 10px !important;
+		}
+	</style>
+{% endblock%}
+
+{% block content %}
+	<p>
+		Vielen Dank für Ihre Angaben. Um die Studie abzuschließen, bitten wir jetzt noch um einige Angaben zu Ihrer Person und zu Ihren Einstellungen. Sie würden uns sehr helfen, wenn Sie möglichst viele Fragen genau und wahrheitsgemäß beantworten. Selbstverständlich werden Ihre Antworten anonym behandelt (d.h. nur unter Ihrer Computernummer abgespeichert) und ausschließlich für Forschungszwecke genutzt. 
+	</p>
+	{% formfield player.age with label="Wie alt sind Sie?" %}
+	{% formfield player.gender with label="Welches Geschlecht haben Sie?" %}
+	{% formfield player.studies with label="Was studieren Sie (im Hauptfach)?" %}
+
+	{% next_button %}
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+	Proberunde
+{% endblock %}
+
+{% block styles %}
+	<style type="text/css"> 
+		.page-header {
+			padding-top: 0px !important;
+			padding-bottom: 0px !important;
+			margin-top: 0px !important;
+			margin-bottom: 10px !important;
+		}
+	</style>
+{% endblock%}
+
+{% block content %}
+	<p>
+		Bevor Sie mit der ersten Entscheidungsaufgabe beginnen, können Sie sich auf dem folgenden Bildschirm kurz mit der Bedienung bekannt machen. Die Aufgabe ist nur dazu da, Sie mit der Anpassung der Balkenhöhe vertraut zu machen. Ihre Leistung ist daher in diesem Teil nicht auszahlungsrelevant. 
+	</p>
+	<p>
+		Sie sehen auf dem folgenden Bildschirm einen Balken, ähnlich der zuvor beschriebenen Lotteriedarstellung. Zusätzlich ist auf dem Hintergrund ein Bereich durch zwei horizontale, rote Linien markiert. Ihre Aufgabe ist es, durch Bedienen des Buttons die Höhe des Balkens so anzupassen, dass er zwischen den beiden roten Markierungen endet.
+	</p>
+	<p>
+		Endet der Balken außerhalb der roten Marierungen, beginnt die Proberunde erneut. Sie endet erst, wenn Sie insgesamt drei mal erfolgreich den Balken so angepasst haben, dass er in dem rot markierten Bereich endet.
+	</p>
+	{% next_button %}
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+	Ende
+{% endblock %}
+
+{% block styles %}
+	<style type="text/css"> 
+		.page-header {
+			padding-top: 0px !important;
+			padding-bottom: 0px !important;
+			margin-top: 0px !important;
+			margin-bottom: 10px !important;
+		}
+	</style>
+{% endblock%}
+
+{% block content %}
+	<p>
+		Vielen Dank für Ihre Teilnahme. Das Experiment ist jetzt beendet.
+	</p>
+
+	<p>	 
+		In der Entscheidungsaufgabe wurde zufällig Runde {{ relevant_round }} zur Auszahlung ausgewählt.<br>
+		In dieser Runde spielten Sie die 50:50 Lotterie mit folgenden möglichen Auszahlungsbeträgen: grün: {{ low_payoff }} - gelb: {{ high_payoff }}.<br>
+		Das Ergebnis des Zufallszugs ist: {{ lottery_outcome }}<br>
+		In dieser Runde haben Sie also {{ payoff }} verdient was umgerechnet {{ payoff_euro }} Euro entspricht.
+	</p>
+	<p>
+		Zusammen mit Ihrer Teilnahmevergütung von {{ participation_fee }}  erhalten Sie also insgesamt <b>{{ payoff_total }}</b>. <br>
+		Bitte tragen Sie diesen Betrag in die ausgeteilte Quittung ein und warten Sie an Ihrem Platz bis Sie an Hand Ihrer Computernummer aufgerufen werden.
+	</p>
+{% endblock %}
+
+
+ 

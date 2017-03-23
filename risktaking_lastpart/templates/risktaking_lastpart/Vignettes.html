@@ -1,0 +1,59 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+	Rangordnung
+{% endblock %}
+
+{% block styles %}
+	<style type="text/css"> 
+		.page-header {
+			padding-top: 0px !important;
+			padding-bottom: 0px !important;
+			margin-top: 0px !important;
+			margin-bottom: 10px !important;
+		}
+		.errorlist {
+			color: red;
+		}
+	</style>
+{% endblock%}
+
+{% block content %}
+
+	<p>
+	In den folgenden Szenarien, erleben 4 unterschiedliche Personen ähnliche Ereignisse. Insbesondere ist das Endergebnis für alle vier Personen gleich. Allerdings ist die Folge der Ereignisse, die zu dem Endergebnis führt, unterschiedlich. Ihre Aufgabe ist es nun, die Personen danach zu ordnen, <b>wie schlecht</b> sie sich mit dem Endergebnis fühlen. Tippen Sie dazu eine „1“ in das Feld vor die Person, die sich, Ihrer Meinung nach, am schlechtesten fühlt. Tippen Sie eine „2“ in das Feld vor die Person, die sich am zweitschlechtesten fühlt usw. Wenn Sie meinen, dass sich zwei oder mehr Personen gleich schlecht fühlen, schreiben Sie dieselbe Zahl in die Felder vor den entsprechenden Namen. 
+	</p>
+
+	<table>
+		<tr>
+			<td width="15%"><b>Rang</b></td>
+			<td width="85%"><b>Szenario</b></td>
+		</tr>
+
+		<tr>
+			<td><input type="number" name="ch_no" id="id_ch_no" min="1" max="4" step="1" value="{{ form.ch_no.value }}" required/></td>
+			<td>Frank besitzt Aktien von Firma B. Im letzten Jahr wurde er von seinem Anlageberater gefragt, ob er etwas dagegen habe, seine Aktien von Firma B zu verkaufen und stattdessen Aktien von Firma A zu kaufen. Frank hat nicht widersprochen. Nun findet er heraus, dass er 1200 EURO mehr verdient hätte, hätte er seine Aktien von Firma B behalten.<p>{{ form.ch_no.errors }}</p> </td>
+		</tr>
+
+		<tr>
+			<td><input type="number" name="sq_act" id="id_sq_act" min="1" max="4" step="1"  value="{{ form.sq_act.value }}" required/></td>
+			<td>Henry besitzt Aktien von Firma A. Im letzten Jahr wurde er von seinem Anlageberater gefragt, ob er etwas dagegen habe, die Aktien bei Firma A zu verkaufen und stattdessen Aktien bei Firma B zu kaufen. Henry widersprach und behielt seine Aktien bei Firma A. Nun findet er heraus, dass er 1200 EURO mehr verdient hätte, wenn er die Aktien von Firma B gekauft hätte.<p>{{ form.sq_act.errors }}</p> </td>
+		</tr>
+
+		<tr>
+			<td><input type="number" name="sq_no" id="id_sq_no" min="1" max="4" step="1" value="{{ form.sq_no.value }}" required/></td>
+			<td>Paul besitzt Aktien von Firma A. Im letzten Jahr hat er überlegt, stattdessen Aktien von Firma B zu kaufen, sich aber dagegen entschieden. Nun findet er heraus, dass er 1200 Euro mehr verdient hätte, wenn er die Aktien in Firma B gekauft hätte.<p>{{ form.sq_no.errors }}</p></td>
+		</tr>
+
+		<tr>
+			<td><input type="number" name="ch_act" id="id_ch_act" min="1" max="4" step="1" value="{{ form.ch_act.value }}" required/></td>
+			<td>Georg besitzt Aktien bei Firma B. Im letzten Jahr hat er seine Aktien bei Firma B verkauft und stattdessen Aktien bei Firma A gekauft. Nun findet er heraus, dass er 1200 Euro mehr verdient hätte, wenn er seine Aktien bei Firma B behalten hätte.<p>{{ form.ch_act.errors }}</p></td>
+		</tr>
+	</table>
+	<p>&nbsp;</p>
+	{% next_button %}
+{% endblock %}
+
+
+ 

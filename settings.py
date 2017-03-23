@@ -91,14 +91,10 @@ DEMO_PAGE_INTRO_TEXT = """
 
 ROOMS = [
     {
-        'name': 'econ101',
-        'display_name': 'Econ 101 class',
-        'participant_label_file': '_rooms/econ101.txt',
-    },
-    {
-        'name': 'live_demo',
-        'display_name': 'Room for live demo (no participant labels)',
-    },
+        'name': 'awi_lab',
+        'display_name': 'AWI Experimentallabor',
+        'participant_label_file': 'participant_labels.txt'
+    }
 ]
 
 

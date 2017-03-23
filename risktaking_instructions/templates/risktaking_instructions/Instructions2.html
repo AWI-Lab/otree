@@ -1,0 +1,91 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+	Instruktionen
+{% endblock %}
+
+{% block styles %}
+	<style type="text/css"> 
+		.page-header {
+			padding-top: 0px !important;
+			padding-bottom: 0px !important;
+			margin-top: 0px !important;
+			margin-bottom: 10px !important;
+		}
+
+		.image_box {
+			text-align: center;
+		}
+	</style>
+{% endblock%}
+
+{% block content %}
+	<p><b>Anleitung 2 von 2</b></p>
+	{% if mode == "Active" %}
+		<p>
+			Zu Beginn jeder Runde sehen Sie die Lotterie, die Ihnen zunächst zugeteilt wurde. Dies ist Ihre Anfangslotterie. Wenn Sie diese Anfangslotterie behalten möchten, müssen Sie nichts tun und lediglich {{ interval }} Sekunden warten. Die Runde endet dann und Ihre Anfangslotterie wird gespielt. 
+		</p>
+		{% if default == "Safe" %}
+			<p>
+				Alternativ können Sie die Ergebnisse der Anfangslotterie ändern, indem Sie auf den Button „Anpassen“ klicken. <b>Dazu haben Sie {{ interval }} Sekunden Zeit.</b> Sobald Sie auf den Button „Anpassen“ klicken, werden vom grünen Balken (bzw. Ergebnis) {{ small_step }} Punkte abgezogen und dem gelben Balken (bzw. Ergebnis) {{ big_step }} Punkte hinzugezählt. D.h. der Unterschied in den Auszahlungen wird größer, allerdings bekommen Sie auch mehr Punkte, wenn das „gelbe“ Ergebnis ausgewählt wird. 
+			</p>
+			<p>
+				Das folgende Beispiel soll verdeutlichen, wie das Anpassen einer Lotterie funktioniert. Die Anfangslotterie wird Ihnen im linken Bild dargestellt. Sie erhalten 24 Punkte, wenn das „grüne“ Ereignis und 36 Punkte, wenn das „gelbe“ Ereignis gezogen wird. Im rechten Bild sehen Sie die Lotterie, die entstehen würde, wenn Sie auf „Anpassen“ drücken. Über dem grünen Balken steht jetzt die Zahl 16 und im gelben Balken die Zahl 48.
+			</p>
+			<div class="image_box">
+				<img src="{% static "risktaking_instructions/safe.png" %}" alt="safe">
+			</div>
+			<p>
+				Wenn Sie auf „Anpassen“ geklickt haben, wird Ihnen die neue Lotterie nach Ablauf der {{ interval }} Sekunden angezeigt. Danach haben Sie wieder die Möglichkeit zu entscheiden, ob Sie diese neue Lotterie behalten wollen oder ob Sie einen weiteren Anpassungsschritt vornehmen möchten. Wollen Sie die neue Lotterie behalten, müssen Sie wiederum {{ interval }} Sekunden warten. Die Lotterie wird dann automatisch ausgewählt und eines der Ereignisse (grün oder gelb) wird zufällig ausgewählt. Sofern Sie die neue Lotterie erneut anpassen wollen, klicken Sie bitte erneut auf „Anpassen“. Sie haben dazu wieder {{ interval }} Sekunden Zeit. Sie könne die Lotterie so lange anpassen, bis der grüne Balken (Ergebnis) 0 Punkte erreicht.
+			</p>
+		{% else %}
+			<p>
+				Alternativ können Sie die Ergebnisse der Anfangslotterie ändern, indem Sie auf den Button „Anpassen“ klicken. <b>Dazu haben Sie {{ interval }} Sekunden Zeit.</b> Sobald Sie auf den Button „Anpassen“ klicken, werden vom grünen Balken (bzw. Ergebnis) {{ small_step }} Punkte hinzugezählt und dem gelben Balken (bzw. Ergebnis) {{ big_step }} Punkte abgezogen. D.h. der Unterschied in den Auszahlungen wird kleiner, allerdings bekommen Sie auch mehr Punkte, wenn das „grüne“ Ergebnis ausgewählt wird. 
+
+			</p>
+			<p>
+				Das folgende Beispiel soll verdeutlichen, wie das Anpassen einer Lotterie funktioniert. Die Anfangslotterie wird Ihnen im linken Bild dargestellt. Sie erhalten 16 Punkte, wenn das „grüne“ Ereignis und 48 Punkte, wenn das „gelbe“ Ereignis gezogen wird. Im rechten Bild sehen Sie die Lotterie, die entstehen würde, wenn Sie auf „Anpassen“ drücken. Üer dem  grünen Balken steht jetzt die Zahl 24 und über dem gelben Balken die Zahl 36.
+			</p>
+			<div class="image_box">
+				<img src="{% static "risktaking_instructions/risky.png" %}" alt="active risky">
+			</div>
+			<p>
+				Wenn Sie auf „Anpassen“ geklickt haben, wird Ihnen die neue Lotterie nach Ablauf der {{ interval }} Sekunden angezeigt. Danach haben Sie wieder die Möglichkeit zu entscheiden, ob Sie diese neue Lotterie behalten wollen oder ob Sie einen weiteren Anpassungsschritt vornehmen möchten. Wollen Sie die neue Lotterie behalten, müssen Sie wiederum {{ interval }} Sekunden warten. Die Lotterie wird dann automatisch ausgewählt und eines der Ereignisse (grün oder gelb) wird zufällig ausgewählt. Sofern Sie die neue Lotterie erneut anpassen wollen, klicken Sie bitte erneut auf „Anpassen“. Sie haben dazu wieder {{ interval }} Sekunden Zeit. Sie könne die Lotterie so lange anpassen, bis beide Balken das gleiche Ergebnis erreichen.
+			</p>
+
+		{% endif %}
+	{% else %}
+		<p>
+			Zu Beginn jeder Runde sehen Sie die Lotterie, die Ihnen zunächst zugeteilt wurde. Dies ist Ihre Anfangslotterie. Wenn Sie diese Anfangslotterie behalten möchten, müssen Sie innerhalb von {{ interval }} Sekunden auf den Button „Anpassung stoppen“ drücken. Die Runde endet dann und Sie behalten Ihre Anfangslotterie. 
+		</p>
+		{% if default == "Safe" %}
+			<p>
+				Alternativ können Sie die Ergebnisse der Anfangslotterie ändern, <b>indem Sie lediglich {{ interval }} Sekunden warten.</b> Nach {{ interval }} Sekunden, werden vom grünen Balken (bzw. Ergebnis) {{ small_step }} Punkte abgezogen und dem gelben Balken (bzw. Ergebnis) {{ bit_step }} Punkte hinzugezählt. D.h. der Unterschied in den Auszahlungen wird größer, allerdings bekommen Sie auch mehr Punkte, wenn das „gelbe“ Ergebnis ausgewählt wird. 
+			</p>
+			<p>
+				Das folgende Beispiel soll verdeutlichen, wie sich die Lotterie automatisch anpasst. Die Anfangslotterie wird Ihnen im linken Bild dargestellt. Sie erhalten 24 Punkte, wenn das „grüne“ Ereignis und 36 Punkte, wenn das „gelbe“ Ereignis gezogen wird. Im rechten Bild sehen Sie die Lotterie, die entstehen würde, wenn Sie {{ interval }} Sekunden warten. Über dem grünen Balken steht jetzt die Zahl 16 und im gelben Balken die Zahl 48.
+			</p>
+			<div class="image_box">
+				<img src="{% static "risktaking_instructions/safe.png" %}" alt="passive safe">
+			</div>
+			<p>
+				Die neue Lotterie wir Ihnen nach Ablauf der {{ interval }} Sekunden angezeigt. Danach haben Sie wieder die Möglichkeit zu entscheiden, ob Sie diese neue Lotterie behalten wollen oder ob Sie einen weiteren Anpassungsschritt vornehmen möchten. Wollen Sie die neue Lotterie behalten, müssen Sie lediglich den Button „Anpassung stoppen“ drücken. Die Lotterie wird dann ausgewählt und eines der Ereignisse (grün oder gelb) wird zufällig gezogen. Sofern Sie die neue Lotterie erneut anpassen wollen, müssen Sie wiederum {{ interval }} Sekunden warten. Sie können die Lotterie so lange anpassen, bis der grüne Balken (Ergebnis) 0 Punkte erreicht.
+			</p>
+		{% else %}
+			<p>
+				Alternativ können Sie die Ergebnisse der Anfangslotterie ändern, <b>indem Sie lediglich {{ interval }} Sekunden warten.</b> Nach {{ interval }} Sekunden, werden zum grünen Balken (bzw. Ergebnis) {{ small_step }} Punkte hinzugezählt und vom gelben Balken (bzw. Ergebnis) {{ big_step }} Punkte abgezogen. D.h. der Unterschied in den Auszahlungen wird kleiner, allerdings bekommen Sie auch mehr Punkte, wenn das „grüne“ Ergebnis ausgewählt wird. 
+			</p>
+			<p>
+				Das folgende Beispiel soll verdeutlichen, wie sich die Lotterie automatisch anpasst. Die Anfangslotterie wird Ihnen im linken Bild dargestellt. Sie erhalten 16 Punkte, wenn das „grüne“ Ereignis und 48 Punkte, wenn das „gelbe“ Ereignis gezogen wird. Im rechten Bild sehen Sie die Lotterie, die entstehen würde, wenn Sie auf „Anpassen“ drücken. Über dem grünen Balken steht jetzt die Zahl 24 und über dem gelben Balken die Zahl 36.
+			</p>
+			<div class="image_box">
+				<img src="{% static "risktaking_instructions/risky.png" %}" alt="passive risky">
+			</div>
+			<p>
+				Die neue Lotterie wir Ihnen nach Ablauf der {{ interval }} Sekunden angezeigt. Danach haben Sie wieder die Möglichkeit zu entscheiden, ob Sie diese neue Lotterie behalten wollen oder ob Sie einen weiteren Anpassungsschritt vornehmen möchten. Wollen Sie die neue Lotterie behalten, müssen Sie lediglich den  Button „Anpassung stoppen“ drücken. Die Lotterie wird dann ausgewählt und eines der Ereignisse (grün oder gelb) wird zufällig gezogen. Sofern Sie die neue Lotterie erneut anpassen wollen, müssen Sie wiederum {{ interval }} Sekunden warten. Sie könne die Lotterie so lange anpassen, bis beide Balken den selben Punktestand erreichen.
+			</p>
+		{% endif %}
+	{% endif %}
+	{% next_button %}
+{% endblock %}
