@@ -17,8 +17,8 @@ class Instructions1(Page):
 class Instructions2(Page):
 	def vars_for_template(self):
 		return {
-			'default': safe_json(self.participant.vars['default']),
-			'mode': safe_json(self.participant.vars['mode']),
+			'default': self.participant.vars['default'],
+			'mode': self.participant.vars['mode'],
 			'big_step': safe_json(self.session.vars['big_step']), 
 			'small_step': safe_json(self.session.vars['small_step']),
 			'interval': safe_json(self.session.vars['interval']),
