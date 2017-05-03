@@ -13,5 +13,11 @@ SESSION_CONFIGS = [
         'real_world_currency_per_point': 0.02,
         'participation_fee': 3.00,
         'main_task_rounds': 10
+    },
+        {
+        'name': 'public_goodsMartin',
+        'display_name': "Martins Public Goods",
+        'num_demo_participants': 15,
+        'app_sequence': ['public_goodsMartin', 'payment_info'],
     }
 ]

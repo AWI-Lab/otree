@@ -1,0 +1,16 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Beitrag (Runde {{player.round_number}} von {{Constants.num_rounds}})
+{% endblock %}
+
+{% block content %}
+
+    {% formfield player.contribution with label="Wieviel möchten Sie investieren (von 0 bis 50)?" %}
+
+    {% next_button %}
+
+    {% include Constants.instructions_template %}
+
+{% endblock %}

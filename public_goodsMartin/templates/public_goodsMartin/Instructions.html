@@ -1,0 +1,37 @@
+{% load otree_tags staticfiles %}
+
+<div class="instructions well well-lg">
+
+    <h3 class="panel-sub-heading">
+        Anleitung
+    </h3>
+
+    <p>
+        In dieser Studie werden Sie in einer zufällig zusammengesetzten Gruppe aus
+        {{ Constants.players_per_group }} Teilnehmern sein. Die Zusammensetzung der Gruppe wird sich über alle Runden hinweg nicht ändern.
+        Es werden insgesamt {{ Constants.num_rounds}} Runden gespielt.
+    </p>
+    <p>
+        Jeder Teilnehmer erhält {{ Constants.endowment }}. Die Gruppe hat die Möglichkeit damit ein gemeinsames Projekt zu finanzieren. 
+        Jeder Teilnehmer in der Gruppe entscheidet individuell, wieviel er zum Projekt beitragen möchte. Beiträge können ganze Zahlen von 0
+        bis {{ Constants.endowment }} sein.
+
+    </p>
+    <p>
+        Jeden Punkt, den Sie in das Projekt investieren erhöht die Auszahlung aller Gruppenmitglieder
+        um 0.5 Punkte.
+        Ihre Auszahlung entspricht dabei Ihrer Anfangsausstattung abzüglich Ihres Beitrages 
+        zuzüglich des Beitrags aller Gruppenmitglieder zum Projekt multipliziert mit 0.5.
+    </p>
+    <h4 class="panel-sub-heading">
+        Beispiel:
+    </h4>
+
+    <p>
+        Ihr Beitrag zum Projekt waren 10 Punkte, der Beitrag aller anderen Gruppenmitglieder war 40 Punkte. Dies ergibt einen Gesamtbeitrag von 50 Punkten.
+    </p>
+
+    <p> 
+        Ihre Auszahlung entspricht: 50 Punkte Anfangsausstattung - 10 Punkte Ihr Beitrag + (50 Punkte Gesamtbeitrag)*0.5 = 65 Punkte.
+</div>
+
