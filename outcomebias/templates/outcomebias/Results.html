@@ -1,0 +1,84 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+   	Results
+{% endblock %}
+
+
+{% block styles %}
+	<style type="text/css">
+	.page-header {
+		padding-top: 0px !important;
+		padding-bottom: 0px !important;
+		margin-top: 0px !important;
+		margin-bottom: 10px !important;
+	}
+	</style>
+{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript">
+		// This script hides the timeout until there is only less than one minute left.
+		$(function() {
+			$('#otree-timeout').hide(); 	
+		});
+		
+		$('#minutes').bind("DOMSubtreeModified",function(event){
+  			if (event.currentTarget.innerHTML == "0") {
+  				// console.log('less than one minute to go');
+  				$('#otree-timeout').show(); 
+  			}
+		});
+	</script>
+{% endblock %}
+
+{% block content %}
+
+	<p><b>Role</b><br>
+	{% if player.role == "agent" %}
+		You are <b>Player A</b>.
+	{% else %}
+		You are <b>Player B</b>.
+	{% endif %}</p>
+
+	<p><b>Decision</b><br><b>{% if group.treatment == "agent" %}Player A {% else %} The computer {% endif %}</b>
+	has selected <b>{{ group.winning_color }}</b> to be the winning color.<br>
+	
+	<p><b>Outcome</b><br>
+	{% if group.lottery_outcome == "good" %}
+		The color of the ball drawn from the virtual urn is: {{ group.winning_color }}<br>
+		The colors match.
+	{% else %}
+		{% if group.winning_color == "yellow" %}
+			The color of the ball drawn from the virtual urn is: green<br>
+		{% else %}
+			The color of the ball drawn from the virtual urn is: yellow<br>
+		{% endif %}
+		The colors do not match.
+	{% endif %}
+	</p>
+
+	<p>Player B receives an additional {{ group.lottery_pay }} points from the lottery.<p>
+	<p>For this outcome, Player B has decided to send {{ group.reward }} points to Player A.</p>
+
+	<p>Player A's final payoff is: {{ group.a_payoff }} points <br>
+	Player B's final payoff is: {{ group.b_payoff }} points</p>
+
+
+	{% if player.role == "principal" %}
+		<p><b>Evaluation</b></p>
+		{% if group.treatment == "agent" %}
+			{% formfield player.decision_satisfaction with label="How satisfied are you with the <u>color choice</u> of Player A? (1 = very dissatisfied, 7 = very satisfied)" %}
+		{% else %}
+			{% formfield player.decision_satisfaction with label="How satisfied are you with the <u>color choice</u> by the computer? (1 = very dissatisfied, 7 = very satisfied)" %}
+		{% endif %}
+		{% formfield player.outcome_satisfaction with label="How satisfied are you with the <u>outcome</u> of the lottery? (1 = very dissatisfied, 7 = very satisfied)" %}
+	{% endif %}
+
+
+	{% next_button %}
+
+{% endblock %}
+
+

@@ -19,5 +19,13 @@ SESSION_CONFIGS = [
         'display_name': "Martins Public Goods",
         'num_demo_participants': 15,
         'app_sequence': ['public_goodsMartin', 'payment_info'],
+    },
+    {
+        'name': 'outcome_bias',
+        'display_name': 'Outcome Bias - Koenig / Trautmann',
+        'app_sequence': ['outcomebias'],
+        'num_demo_participants': 4,
+        'participation_fee': 0.00,
+        'real_world_currency_per_point': 0.01,
     }
 ]

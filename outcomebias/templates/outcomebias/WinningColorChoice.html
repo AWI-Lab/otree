@@ -1,0 +1,53 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+	Color choice
+{% endblock %}
+
+{% block styles %}
+	<style type="text/css">
+	.page-header {
+		padding-top: 0px !important;
+		padding-bottom: 0px !important;
+		margin-top: 0px !important;
+		margin-bottom: 10px !important;
+	}
+	</style>
+{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript">
+		// This script hides the timeout until there is only less than one minute left.
+		$(function() {
+			$('#otree-timeout').hide(); 	
+		});
+		
+		$('#minutes').bind("DOMSubtreeModified",function(event){
+  			if (event.currentTarget.innerHTML == "0") {
+  				// console.log('less than one minute to go');
+  				$('#otree-timeout').show(); 
+  			}
+		});
+	</script>
+{% endblock %}
+
+{% block content %}
+
+<!--
+Documentation on how to write a django template here:
+https://docs.djangoproject.com/en/1.8/ref/templates/language/
+
+Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
+http://getbootstrap.com/components/
+
+-->
+
+<p>You are <b>Player A</b>.</p>
+
+
+{% formfield group.winning_color with label="Please choose a winning color for Player B's lottery:" %}
+
+    {% next_button %}
+
+{% endblock %}

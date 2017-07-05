@@ -1,0 +1,45 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+	Demographics
+{% endblock %}
+
+{% block styles %}
+	<style type="text/css">
+	.page-header {
+		padding-top: 0px !important;
+		padding-bottom: 0px !important;
+		margin-top: 0px !important;
+		margin-bottom: 10px !important;
+	}
+	</style>
+{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript">
+		// This script hides the timeout until there is only less than one minute left.
+		$(function() {
+			$('#otree-timeout').hide(); 	
+		});
+		
+		$('#minutes').bind("DOMSubtreeModified",function(event){
+  			if (event.currentTarget.innerHTML == "0") {
+  				// console.log('less than one minute to go');
+  				$('#otree-timeout').show(); 
+  			}
+		});
+	</script>
+{% endblock %}
+
+{% block content %}
+
+<p>Please answer the following questions about yourself.</p>
+
+{% for field in form %}
+    {% formfield field %}
+{% endfor %}
+
+{% next_button %}
+
+{% endblock %}
