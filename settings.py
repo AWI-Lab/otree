@@ -63,7 +63,7 @@ USE_POINTS = True
 
 # e.g. en, de, fr, it, ja, zh-hans
 # see: https://docs.djangoproject.com/en/1.9/topics/i18n/#term-language-code
-LANGUAGE_CODE = 'de'
+LANGUAGE_CODE = 'en'
 
 # if an app is included in SESSION_CONFIGS, you don't need to list it here
 INSTALLED_APPS = ['otree']
