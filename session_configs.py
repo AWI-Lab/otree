@@ -27,11 +27,5 @@ SESSION_CONFIGS = [
         'num_demo_participants': 4,
         'participation_fee': 0.00,
         'real_world_currency_per_point': 0.01,
-    },
-    {
-        'name': 'quiz',
-        'display_name': 'oTree Seminar Demo Project: Quiz',
-        'num_demo_participants': 1,
-        'app_sequence': ['quiz'],
     }
 ]
