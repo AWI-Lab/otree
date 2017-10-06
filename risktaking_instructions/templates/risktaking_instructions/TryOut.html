@@ -3,7 +3,7 @@
 
 
 {% block title %}
-	Proberunde
+	Teil 1 - Proberunde
 {% endblock %}
 
 {% block styles %}
@@ -56,7 +56,7 @@
 				default: {{ default }},
 				step_size: {{ big_step }},
 				interval: {{ interval }},
-				max_repititions: 3,
+				max_repititions: 2,
 				targets: [88, 76, 99]
 			});
 			Trial.run();
@@ -107,7 +107,7 @@
 				}
 			
 				if (this.mode == "Active") {
-					this.btn.text("Punktezahl anpassen");
+					this.btn.text("Höhe anpassen");
 				} else {
 					this.btn.text("Anpassung stoppen");
 				}
@@ -146,7 +146,10 @@
 						min: this.min,
 						max: this.max + 10,
 						title: {
-							text: 'Punkte'
+							text: 'Höhe'
+						},
+						labels: {
+							enabled: false
 						},
 						plotLines: [{
 							color: 'red',
@@ -174,7 +177,7 @@
 							colorByPoint: true,
 							colors: ['green'],
 							dataLabels: {
-								enabled: true,
+								enabled: false,
 								style: {
 									fontSize: "14px"
 								}
@@ -191,7 +194,7 @@
 
 				this.user_has_acted = true;
 				this.btn.addClass("hidden");
-				this.msg.text("Anpassung erfolgt in: ");
+				this.msg.text("Zeit: ");
 
 
 				if (this.mode == "Passive") {
@@ -257,13 +260,13 @@
 				window.setTimeout(function() {
 					self.running = true;
 					self.seconds_left = self.interval;
-					self.msg.text("Verbleibende Zeit: ");
-					self.counter.text(self.seconds_left + " Sekunden");
+					self.msg.text("Zeit: ");
+					self.counter.text(self.seconds_left + "s");
 					self.info.addClass("hidden");
 					self.btn.removeClass("hidden");
 					self.interval_id = window.setInterval(function () {
 						self.seconds_left -= 1;
-						self.counter.text(self.seconds_left + " Sekunden");
+						self.counter.text(self.seconds_left + "s");
 						if (self.seconds_left <= 0) {
 							if (self.mode == "Passive") {
 								self.make_step();
@@ -277,8 +280,8 @@
 							}
 							if (self.running) {
 								self.seconds_left = self.interval;
-								self.msg.text("Verbleibende Zeit: ");
-								self.counter.text(self.seconds_left + " Sekunden");
+								self.msg.text("Zeit: ");
+								self.counter.text(self.seconds_left + "s");
 								self.btn.removeClass("hidden");
 							}
 						} 
@@ -317,11 +320,7 @@
 				// tba: show different messages for "success" and failure
 				
 				if (success) {
-					if (this.repetition == 1) {
-						this.info.text("Sehr gut. Versuchen Sie es noch einmal! (1 von 3)");
-					} else if (this.repetition == 2) {
-						this.info.text("Sehr gut. Versuchen Sie es noch einmal! (2 von 3)");
-					} 
+					this.info.text("Sehr gut. Versuchen Sie es noch einmal! ("+this.repetition+" von "+this.max_repititions+")");
 				} else {
 					this.info.text("Der Balken endete nicht im Zielbereich. Versuchen Sie es noch einmal!");
 				}
@@ -342,7 +341,9 @@
 
 
 {% block content %}
-	<p id="instructions"></p>
+	<p id="instructions">
+		Passen Sie mithilfe des Buttons die Höhe des Balkens an, bis er im rot markierten Bereich endet.
+	</p>
 	<div id="countdown">
 		<span id="msg">Die Proberunde beginnt in ca. 10 Sekunden.</span><span id="counter"></span>
 	</div>

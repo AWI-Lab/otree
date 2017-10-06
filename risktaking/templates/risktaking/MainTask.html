@@ -12,9 +12,10 @@
 		}
 
 		#info {
-			
+			clear: both;
 			font-weight: bold;
 			font-size: 20px;
+			text-align: center;
 		}
 
 		#next_box {
@@ -43,6 +44,32 @@
 		.smalltext {
 			font-size: 12px;
 		}
+
+		#green_change {
+			color: green;
+			width: 49%;
+			display: inline-block;
+			text-align: center;
+			float: left;
+		}
+
+		#yellow_change {
+			color: orange;
+			width: 49%;
+			display: inline-block;
+			text-align: center;
+			float: right;
+		}
+
+		#adjustments {
+			font-weight: bold;
+			font-size: 16px;
+			width: 91%;
+			margin-right: 10px;
+			overflow: hidden;
+			float: right;
+		}
+
 	</style>
 {% endblock %}
 
@@ -58,8 +85,8 @@
 		    Adj.prepare({
 		    	default: {{ default }},
 		    	mode: {{ mode }},
-		    	small_step: {{ small_step }},
-		    	big_step: {{ big_step }},
+		    	small_step: {{ small_step }} / 100,
+		    	big_step: {{ big_step }} / 100,
 		    	max_steps: {{ max_steps }},
 		    	min: 0.0,
 		    	interval: {{ interval }},
@@ -156,7 +183,10 @@
 			            min: this.min,
 			            max: this.max,
 			            title: {
-			                text: 'Auszahlungen'
+			                text: 'Auszahlungen (Euro)'
+			            },
+			            labels: {
+			            	format: '{value:.2f}'
 			            }
 			        },
 			        plotOptions: {
@@ -175,7 +205,8 @@
 			            		enabled: true,
 			            		style: {
 			            			fontSize: "14px"
-			            		}
+			            		},
+			            		format: '{y:.2f}'
 			            	}
 						}
 					]
@@ -206,18 +237,28 @@
 			}
 
 			this.run = function () {
-				var timeout = 10; // seconds
+				var pre_seconds_left = 15;
 
-				window.setTimeout(function () {
+				self.intro_timer = window.setInterval(function () {
+					pre_seconds_left -= 1;
+					self.counter.text(pre_seconds_left + "s");
+
+					if (pre_seconds_left <= 0) {
+						doTask();
+						window.clearInterval(self.intro_timer);
+					}
+				}, 1000);
+
+				doTask = function () {
 					self.running = true;
 					self.seconds_left = self.interval;
-					self.msg.text("Verbleibende Zeit: ");
+					self.msg.text("Zeit: ");
 					self.counter.text(self.seconds_left + " Sekunden");
 					self.info.addClass("hidden");
 					self.btn.removeClass("hidden");
 					self.interval_id = window.setInterval(function() {
 						self.seconds_left -= 1;
-						self.counter.text(self.seconds_left + " Sekunden");
+						self.counter.text(self.seconds_left + "s");
 						if (self.seconds_left <= 0) {
 							if (self.mode == "Passive") {
 								self.make_step();
@@ -231,32 +272,56 @@
 							}
 							if (self.running) {
 								self.seconds_left = self.interval;
-								self.msg.text("Verbleibende Zeit: ");
-								self.counter.text(self.seconds_left + " Sekunden");
+								self.msg.text("Zeit: ");
+								self.counter.text(self.seconds_left + "s");
 								self.btn.removeClass("hidden");
 							}
 						}
 
 					}, 1000);
-				}, timeout * 1000);
+				}
+
 			}
+				// window.setTimeout(function () {
+				// 	self.running = true;
+				// 	self.seconds_left = self.interval;
+				// 	self.msg.text("Verbleibende Zeit: ");
+				// 	self.counter.text(self.seconds_left + " Sekunden");
+				// 	self.info.addClass("hidden");
+				// 	self.btn.removeClass("hidden");
+				// 	self.interval_id = window.setInterval(function() {
+				// 		self.seconds_left -= 1;
+				// 		self.counter.text(self.seconds_left + " Sekunden");
+				// 		if (self.seconds_left <= 0) {
+				// 			if (self.mode == "Passive") {
+				// 				self.make_step();
+				// 			} else { // mode == active
+				// 				if (self.user_has_acted) {
+				// 					self.make_step();
+				// 					self.user_has_acted = false;
+				// 				} else {
+				// 					self.stop();
+				// 				}
+				// 			}
+				// 			if (self.running) {
+				// 				self.seconds_left = self.interval;
+				// 				self.msg.text("Verbleibende Zeit: ");
+				// 				self.counter.text(self.seconds_left + " Sekunden");
+				// 				self.btn.removeClass("hidden");
+				// 			}
+				// 		}
+
+				// 	}, 1000);
+				// }, timeout * 1000);
+			// }
 
 			this.stop = function() {
 				window.clearInterval(this.interval_id);
 				this.interval_id = null;
 				this.running = false;
 
-				var msg = "";
-				if (this.round > 3) {
-					msg = "Die Lotterie wurde festgelegt. ";
-					if (this.outcome == "high") {
-						msg += "Es wurde <span class='yellow'>gelb</span> gezogen.";
-					} else {
-						msg += "Es wurde <span class='green'>grün</span> gezogen.";
-					}
-				} else {
-					msg = "Die Lotterie wurde festgelegt.";
-				}
+				var msg = "Sie haben eine Lotterie ausgewählt";
+
 				this.info.html(msg);
 				this.info.removeClass("hidden");
 				this.counter.text("");
@@ -279,7 +344,7 @@
 
 				this.user_has_acted = true;
 				this.btn.addClass("hidden");
-				this.msg.text("Anpassung erfolgt in: ");
+				this.msg.text("Zeit: ");
 
 				if (this.mode == "Passive") {
 					this.stop();
@@ -293,20 +358,30 @@
 {% endblock %}
 
 {% block content %}
-	{% if round_number > "3" %}
-		<p class="smalltext"><em>Sie erhalten sofort Feedback über den Ausgang der Lotterie.</em></p>
-	{% else %}
-		<p class="smalltext"><em>Sie erhalten erst am Ende des Experiments Feedback über den Ausgang der Lotterie.</em></p>
-	{% endif %}
 	<div id="countdown">
-		<span id="msg">Die Runde beginnt in ca. 10 Sekunden.</span><span id="counter"></span>
+		<span id="msg">Die Runde beginnt in </span><span id="counter">15s</span>
 	</div>
-
 	<div id="lottery1"></div>
+	<div id="adjustments">
+		<span id="yellow_change">
+			{% if default_nojson == "Safe" %}
+			+{{ big_step_text|stringformat:".2f" }}
+		{% else %}
+			-{{ big_step_text|stringformat:".2f" }}
+		{% endif %}
+		</span>
+		<span id="green_change">
+			{% if default_nojson == "Safe" %}
+			-{{ small_step_text|stringformat:".2f" }}
+		{% else %}
+			+{{ small_step_text|stringformat:".2f" }}
+		{% endif %}
+		</span>
+	</div>
+	<div id="info">Machen Sie sich bereit!</div>
 	<div id="buttonbox">
-		<span id="info">Machen Sie sich bereit!</span><br>
-		<button type="button" class="btn btn-primary btn-large hidden" id="action_button"
-		onclick="Adj.user_click();"></button><br>
+		<button type="button" class="btn btn-primary btn-large hidden" id="action_button" onclick="Adj.user_click();"></button>
+		<br>
 	</div>
     <div id="next_box" class="hidden">
     	<input type="hidden" name="low_payoff" id="id_low_payoff" value="">
@@ -314,5 +389,4 @@
     	{% next_button %}
     </div>
 {% endblock %}
-
 

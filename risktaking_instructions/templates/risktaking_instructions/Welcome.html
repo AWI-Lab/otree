@@ -28,13 +28,13 @@
 			Dieses Experiment wird etwa 40 Minuten dauern. Während dieser Zeit sollten Sie Ihren Platz nicht verlassen.
 		</li>
 		<li>
-			Das Experiment besteht aus einer Entscheidungsaufgabe mit insgesamt {{ session.config.main_task_rounds }} Runden, in denen Sie jeweils eine E ntscheidung treffen müssen. Jede Runde läuft nach denselben Regeln ab, die wir Ihnen auf den folgenden Bildschirmen ausführlich erklären werden. 
+			Das Experiment besteht aus zwei Teilen mit unterschiedlichen Entscheidungsaufgaben. Der erste Teil besteht aus insgesamt 10 Runden, in denen Sie jeweils eine Entscheidung treffen. Der zweite Teil hat lediglich eine Runde, in der Sie nur eine einzige Entscheidung treffen. Insgesamt hat dieses Experiment also 11 Runden. 
 		</li>
 		<li>
-			Bitte lesen Sie alle Erklärungen sorgfältig durch. Nur so können Sie sicher sein, dass Sie verstehen wie Ihre Entscheidungen Ihren Verdienst beeinflussen.
+			Bitte lesen Sie alle Erklärungen sorgfältig durch. Nur so können Sie sicher sein, dass Sie verstehen, wie Ihre Entscheidungen Ihren Verdienst beeinflussen. Die Instruktionen für den ersten Teil erhalten Sie auf den nächsten Bildschirmen. Sobald der erste Teil des Experiments abgeschlossen ist, erhalten Sie die Instruktionen für den zweiten Teil. 
 		</li>
 		<li>
-			Bitte schalten Sie Ihr Handy aus und verstauen Sie es. Ab diesem Zeitpunkt sollte auf Ihrem Schreibtisch nichts liegen. (Ein Getränk ist natürlich erlaubt.)
+			Bitte schalten Sie Ihr Handy aus und verstauen Sie es.
 		</li>
 		<li>
 			Verhalten Sie sich während des Experiments ruhig und sprechen Sie nicht mit anderen Teilnehmern. 
@@ -43,25 +43,17 @@
 			Sollten Sie während des Experiments Fragen haben, heben Sie bitte leise die Hand. Die Experimentatoren beantworten Ihre Frage dann an Ihrem Platz. 
 		</li>
 		<li>
-			Alle Ihre Daten werden selbstverständlich anonym abgespeichert und nur zu Forschungszwecken genutzt. 
+			Alle Ihre Daten werden selbstverständlich anonym behandelt und nur zu Forschungszwecken genutzt. 
 		</li>
 	</ul>
 
 	<p><b>Auszahlung am Ende des Experimentes</b></p>
 	<p>
-		Die Studie endet sobald alle Teilnehmer die Entscheidungsaufgabe beendet haben und einen abschließenden Fragebogen ausgefüllt haben. Sollten Sie bereits fertig sein warten Sie bitte ruhig an ihrem Platz bis alle Teilnehmer fertig sind. Sie können nicht früher gehen, wenn Sie die Entscheidungsaufgabe früher beenden. 
+		Für Ihre Teilnahme an diesem Experiment erhalten Sie {{ participation_fee }} Euro. Am Ende des Experiments wird zufällig (mit gleicher Wahrscheinlichkeit) eine der insgesamt 11 Runden aus diesem Experiment ausgewählt und Sie werden gemäß Ihrer Entscheidung in der entsprechenden Runde bezahlt. Sie sollten also zunächst davon ausgehen, dass sich jede Ihrer Entscheidungen in beiden Teilen des Experiments auf Ihren Endverdienst auswirken kann. 
+		}
 	</p>
 	<p>
-		Sobald alle Teilnehmer die Studie beendet habe rufen wir Sie einzeln nach Ihrer Platznummer auf und Sie erhalten Ihren Endverdienst in bar ausgezahlt.
-	</p>
-	<p>
-		Für die Teilnahme an dieser Studie erhalten Sie {{ session.config.participation_fee }}. In den Entscheidungsaufgaben können Sie zusätzliches Geld verdienen. Wie viel Geld Sie zusätzlich erhalten, hängt von Ihren Entscheidungen in den einzelnen Entscheidungsrunden ab. 
-	</p>
-	<p>
-		In jeder Runde der Entscheidungsaufgabe können Sie Punkte verdienen. Am Ende des Experimentes wird eine der zehn Runden zufällig (mit gleicher Wahrscheinlichkeit) ausgewählt. Die Punkte, die Sie in der zufällig ausgewählten Runde gesammelt haben, werden in Euro umgerechnet. Dabei gilt: 100 Punkte =  {{ exchange_rate }} €. Dieser Betrag wird Ihnen dann zusätzlich zu den  {{ session.config.participation_fee }} am Ende des Experiments in bar ausgezahlt. 
-	</p>
-	<p>
-		Sie wissen vorher nicht welche der Runden ausgewählt. Daher sollte Sie zunächst davon ausgehen, dass sich jede der Runden auf Ihren Endverdienst auswirken kann.
+		Die Studie endet sobald alle Teilnehmer beide Teile beendet und einen abschließenden Fragebogen ausgefüllt haben. Erst wenn alle Teilnehmer fertig sind, rufen wir Sie einzeln auf und Sie erhalten Ihren Verdienst in bar ausgezahlt. 
 	</p>
 	{% next_button %}
 {% endblock %}

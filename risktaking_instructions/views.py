@@ -8,7 +8,7 @@ from .models import Constants
 class Welcome(Page):
 	def vars_for_template(self):
 		return {
-			'exchange_rate': format(self.session.real_world_currency_per_point*100, '.2f').replace('.', ',')
+			'participation_fee': self.session.config['participation_fee']
 		}
 
 class Instructions1(Page):
@@ -19,8 +19,6 @@ class Instructions2(Page):
 		return {
 			'default': self.participant.vars['default'],
 			'mode': self.participant.vars['mode'],
-			'big_step': safe_json(self.session.vars['big_step']), 
-			'small_step': safe_json(self.session.vars['small_step']),
 			'interval': safe_json(self.session.vars['interval']),
 		}
 
@@ -29,7 +27,10 @@ class InstructionsWait(WaitPage):
 	body_text = "Bitte warten Sie, bis alle Teilnehmer die Instruktionen gelesen haben."
 
 class TryOutAnnouncement(Page):
-	pass
+	def vars_for_template(self):
+		return {
+			'mode': self.participant.vars['mode']
+		}
 
 class TryOut(Page):
 

@@ -1,0 +1,32 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Fragebogen
+{% endblock %}
+
+{% block styles %}
+    <style type="text/css"> 
+        .page-header {
+            padding-top: 0px !important;
+            padding-bottom: 0px !important;
+            margin-top: 0px !important;
+            margin-bottom: 10px !important;
+        }
+    </style>
+{% endblock%}
+
+{% block content %}
+    <p>
+        Wir bitten Sie nun um einige Angaben zur durchgeführten Studie. Bitte antworten Sie jeweils <b>in maximal 3 Sätzen.</b>
+    </p>
+    {% formfield player.goal_of_experiment with label="Was denken Sie sollte mit diesem Experiment festgestellt werden?" %}
+    {% formfield player.instructions_sufficient with label="Fanden Sie alle Erklärungen ausreichend oder gab es Aufgaben, die Sie nicht verstanden haben?" %}
+    {% formfield player.num_experiments with label="An wie vielen Studien haben Sie im AWI Lab ungefähr bereits teilgenommen?" %}
+    {% formfield player.payoff_importance with label="Wie wichtig war es Ihnen in dieser Studie möglichst viel zu verdienen?<br>(Skala: 0 - sehr unwichtig: 10 - sehr wichtig)" %}
+
+
+
+
+    {% next_button %}
+{% endblock %}

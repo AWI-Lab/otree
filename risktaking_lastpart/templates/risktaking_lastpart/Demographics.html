@@ -2,7 +2,7 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-	Fragebogen
+	Demographiefragebogen
 {% endblock %}
 
 {% block styles %}
@@ -23,6 +23,15 @@
 	{% formfield player.age with label="Wie alt sind Sie?" %}
 	{% formfield player.gender with label="Welches Geschlecht haben Sie?" %}
 	{% formfield player.studies with label="Was studieren Sie (im Hauptfach)?" %}
+
+	{% formfield player.native_german with label="Ist Deutsch Ihre Muttersprache?" %}
+	{% formfield player.smoking with label="Wie würden Sie Ihren Zigarettenkonsum beschreiben?<br/>(Skala: 0 - gar nicht; 10 - sehr häufig)" %}
+	{% formfield player.risk_soep with label="Sind Sie allgemein ein risikobereiter Mensch oder versuchen Sie, Risiken zu vermeiden?<br/>(Skala: 0 - gar nicht risikobereit; 10 - sehr risikobereit)" %}
+	{% formfield player.dentist with label="Wie regelmäßig lassen Sie Ihre Zähne von einem Zahnarzt kontrollieren?<br/>(Skala: 0 - gar nicht; 10 - sehr regelmäßig" %}
+	{% formfield player.free_income with label="Über wie viel Geld können Sie nach Ihren fixen Ausgaben (z.B. Miete) im Monat frei verfügen (in Euro)?" %}
+	{% formfield player.math_grade with label="Welche Note hatten Sie in Mathematik in Ihrer Schul-Abschlussprüfung?" %}
+
+
 
 	{% next_button %}
 {% endblock %}

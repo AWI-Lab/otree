@@ -1,0 +1,31 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Zeitdruck
+{% endblock %}
+
+{% block styles %}
+    <style type="text/css"> 
+        .page-header {
+            padding-top: 0px !important;
+            padding-bottom: 0px !important;
+            margin-top: 0px !important;
+            margin-bottom: 10px !important;
+        }
+    </style>
+{% endblock%}
+
+{% block content %}
+    <p>
+        Bitte beantworten Sie folgende zwei Fragen zu den vorangegangenen 10 Anpassungsrunden. Ihre Antworten haben keine Auswirkung auf Ihre Auszahlung.
+    </p>
+    {% formfield player.time_pressure_start with label="Haben Sie zu Beginn der 10 Anpassungsrunden Zeitdruck empfunden?<br>(Skala: 0 - überhaupt kein Zeitdruck: 10 - sehr starker Zeitdruck)" %}
+    {% formfield player.time_pressure_end with label="Haben Sie am Ende der 10 Anpassungsrunden Zeitdruck empfunden?<br>(Skala: 0 - überhaupt kein Zeitdruck: 10 - sehr starker Zeitdruck)" %}
+    
+
+
+
+
+    {% next_button %}
+{% endblock %}

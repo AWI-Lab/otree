@@ -1,0 +1,172 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+	Teil 2 - Lotteriewahl
+{% endblock %}
+
+{% block scripts %}
+
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			{% for key,value in Constants.lotteries.items %}
+			$('#lottery_{{ key }}').highcharts({
+				chart: {
+					plotBackgroundColor: null,
+					plotBorderWidth: null,
+					plotShadow: false,
+					type: 'pie',
+					height: 175,
+					width: 175
+				},
+				credits: { 
+					enabled: false 
+				},
+				exporting: {
+					enabled: false
+				},
+				tooltip: {
+					enabled: false
+				},
+				title: {
+					text: '',
+				},
+				plotOptions: {
+					pie: {
+						size: '100%',
+						allowPointSelect: false,
+						animation: false,
+						dataLabels: {
+							enabled: true,
+							distance: -42,
+							formatter: function() {
+								return (this.point.x/100).toFixed(2)+"€";
+							},
+							color: 'black',
+							y: 4,
+							style: {
+								textShadow: false,
+								textOutline: false,
+								fontSize: "12px",
+								align: 'center',
+							},
+							padding: 0,
+						},
+						states: {
+						   hover: {
+							   enabled: false
+						   }
+					   }
+					}
+				},
+				series: [{
+					name: 'Auszahlung',
+					colorByPoint: true,
+					data: [{
+						name: 'Right',
+						color: 'orange',
+						y: 50,
+						x: {{ value.win }}
+					}, {
+						name: 'Left',
+						color: 'green',
+						y: 50,
+						x: {{ value.lose }}
+					}]
+				}]
+			});
+			{% endfor %}
+
+		});
+
+		activeElementId = ""
+
+		function setSelected(key) {
+			if (activeElementId != "") {
+				document.getElementById(activeElementId).className = "lottery";
+			}
+			
+			activeElementId = "lottery_"+key;
+			document.getElementById(activeElementId).className += " selected";
+			document.getElementById("id_eg_choice").value = key;
+		}
+	</script>
+
+{% endblock %}
+
+{% block styles %}
+	<style type="text/css">
+		.lottery {
+			float: left;
+			width: 180px;
+			height: 180px;
+			border: 2px solid white;
+		}
+		.lottery:hover {
+			border: 2px dashed gray;
+			cursor: pointer;
+		}
+
+		.selected {
+			border: 2px solid red;
+		}
+
+		.selected:hover {
+			border: 2px solid red;
+		}
+		#lottery_container {
+			width: 900px;
+			height: 540px;
+			margin-left: auto;
+			margin-right:auto;
+		}
+		.page-header {
+			padding-top: 0px !important;
+			padding-bottom: 0px !important;
+			margin-top: 0px !important;
+			margin-bottom: 10px !important;
+		}
+		.spacer {
+			float: left;
+			width: 180px;
+			height: 180px;
+		}
+	</style>
+{% endblock %}
+
+{% block content %}
+	<p>
+		Teil 2 besteht aus nur einer Entscheidung. Die folgenden Kreise stellen eine Reihe verschiedener Lotterien dar. Jede Lotterie hat zwei Ergebnisse, die jeweils mit einer Wahrscheinlichkeit von 50% eintreten können. Die Zahl in jeder Kreishälfte gibt an, wie viel Geld Sie bei Auswahl der Lotterie und späterem Eintreten des jeweiligen Ergebnisses erhalten.
+	</p>
+	<p>
+		Wählen Sie nun durch Anklicken die Lotterie aus, die Sie spielen möchten. Ein roter Rand zeigt an, dass Sie die Lotterie ausgewählt haben. Wird dieser Teil des Experiments auszahlungsrelevant, wird die von Ihnen gewählte Lotterie gespielt und das Ergebnis bestimmt Ihre Auszahlung.
+	</p>
+	<p>
+		<b>Bitte klicken Sie nun auf die Lotterie, die Sie spielen möchten.</b> Klicken Sie danach auf Weiter.
+	</p>
+
+	<div id="lottery_container">
+	{% for key,value in Constants.lotteries.items %}
+		{% if key == 1%}
+			<div class="spacer"></div>
+		{% endif %}
+
+		{% if key == 4 %}
+			<div class="lottery" id="lottery_{{ key }}" onclick="setSelected({{ key }});" style="clear: both;"></div>
+		{% else %}
+			{% if key == 9%}
+				<div class="spacer" style="clear: both"></div>
+				<div class="lottery" id="lottery_{{ key }}" onclick="setSelected({{ key }});"></div>
+			{% else %}
+				<div class="lottery" id="lottery_{{ key }}" onclick="setSelected({{ key }});"></div>
+			{% endif %}
+		{% endif %}
+	{% endfor %}
+	</div>
+	<input type="hidden" name="eg_choice" id="id_eg_choice"/>
+	{% next_button %}
+
+{% endblock %}
+

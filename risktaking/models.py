@@ -8,7 +8,7 @@ import itertools, random
 author = 'Christian König gen. Kersting'
 
 doc = """
-Active Risk Taking, new Design
+Active / Passive Risk Taking Experiment
 """
 
 
@@ -30,10 +30,10 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
 
-	low_payoff = models.FloatField()
-	high_payoff = models.FloatField()
-	lottery_outcome = models.CharField()
-	lottery_payoff = models.CurrencyField()
+	low_payoff = models.FloatField(doc="current round's low payoff in cent")
+	high_payoff = models.FloatField(doc="current round's high payoff in cent")
+	lottery_outcome = models.CharField(doc="current round's lottery outcome (high/low)")
+	lottery_payoff = models.CurrencyField(doc="resulting lottery payoff if round is selected for payment")
 
 
 	def set_payoff(self):

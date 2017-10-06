@@ -2,7 +2,7 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-	Instruktionen
+	Teil 1 - Instruktionen
 {% endblock %}
 
 {% block styles %}
@@ -22,14 +22,19 @@
 {% block content %}
 	<p><b>Anleitung 1 von 2</b></p>
 	<p>
-		In jeder Runde der Entscheidungsaufgabe müssen Sie eine Lotterie aussuchen, die am Ende der Runde ausgespielt wird. Jede Lotterie hat zwei mögliche Ergebnisse, „grün“ und „gelb“. Beide Ergebnisse treten, wie bei einem Münzwurf, mit der gleichen Wahrscheinlichkeit von 50% ein. Die Lotterie wird Ihnen auf dem Bildschirm in Form von zwei Balken (grün und gelb) dargestellt. Jeder der Balken steht dabei für ein mögliches Ergebnis der Lotterie. Die Zahl innerhalb des gelben Balkens zeigt Ihnen an, wie viele Punkte Sie erhalten, wenn das Ereignis “gelb“ eintritt. Die Zahl innerhalb des grünen Balkens zeigt Ihnen an, wie viele Punkte Sie erhalten, wenn  das Ergebnis “grün“ eintritt. Darüber hinaus, zeigt Ihnen auch die Höhe der beiden Balken an, wie hoch die jeweiligen Auszahlungen sind und ermöglicht Ihnen so die Differenz zwischen beiden Ergebnissen leicht ablesen zu können. Das folgende Beispiel soll verdeutlichen, wie die Lotterien dargestellt werden. Über dem grünen Balken steht die Zahl 24 und über dem gelben Balken steht die Zahl 36. Das bedeutet, dass Sie mit einer Chance von 50% 24 Punkte gewinnen, und mit einer Chance von 50% 36 Punkte gewinnen, falls Sie diese Lotterie aussuchen.  
-	</p>
-	<p class="center"><img src="{% static "risktaking_instructions/base_example.png" %}" alt="lottery example"></p>
-	<p>
-		Zu Beginn jeder Runde wird Ihnen zunächst eine Lotterie zugeteilt. Sie müssen dann entscheiden, ob Sie diese zugeteilte Lotterie behalten möchten, oder ob Sie Veränderungen an der Lotterie vornehmen möchten. Wie Sie diese Veränderungen vornehmen können, erklären wir Ihnen auf dem nächsten Bildschirm.
+		In jeder Runde der Entscheidungsaufgabe müssen Sie eine Lotterie aussuchen, die am Ende der Runde ausgespielt wird. 
 	</p>
 	<p>
-		Eine Runde endet sobald Sie festgelegt haben, welche Lotterie Sie behalten möchten. Diese Lotterie wird dann ausgespielt, das heißt es wird zufällig das „grüne“ oder das „gelbe“ Ereignis gezogen. In Runde 1-3 erfahren Sie nicht welches Ereignis gezogen wurde. Sollten eine dieser Runden am Ende des Experiments zur Auszahlung ausgewählt werden, erfahren Sie den Ausgang der Lotterie am Ende des Experimentes. Ab Runde 4 erfahren Sie direkt am Ende einer Runde welches Ereignis gezogen wurde und wie viele Punkte Sie daher in dieser Runde verdient haben. Danach beginnt eine neue Runde. Insgesamt umfasst die Entscheidungsaufgabe also 10 Runden von denen eine zufällig zur Auszahlung ausgewählt wird. 
+		Jede Lotterie hat <b>zwei mögliche Ergebnisse</b>, „grün“ und „gelb“. Beide Ergebnisse treten, wie bei einem Münzwurf, mit der <b>gleichen Wahrscheinlichkeit</b> von 50% ein. Die Lotterie wird Ihnen auf dem Bildschirm in Form von zwei Balken (grün und gelb) dargestellt. Jeder der Balken steht dabei für eines der zwei Ergebnisse der Lotterie. Die Zahl über dem gelben Balken zeigt Ihnen den Eurobetrag an, den Sie erhalten, wenn das Ereignis “gelb“ eintritt. Die Zahl über dem grünen Balken zeigt Ihnen den Eurobetrag an, den Sie erhalten, wenn das Ergebnis „grün“ eintritt. Darüber hinaus zeigt Ihnen auch die Höhe der beiden Balken an, wie hoch die jeweiligen Auszahlungen sind. 
+	<p>
+		Das folgende Beispiel soll verdeutlichen, wie die Lotterie dargestellt wird. Beide Ergebnisse „grün“ und „gelb“ werden mit der gleichen Wahrscheinlichkeit (50%) ausgewählt. Wird das Ergebnis „grün“ ausgewählt, erhalten Sie 7 Euro. Wird das Ergebnis „gelb“ ausgewählt, erhalten Sie 14.50 Euro.   
+	</p>
+	<p class="center"><img src="{% static "risktaking_instructions/base_example.png" %}" alt="lottery example" width="800"></p>
+	<p>
+		Zu Beginn jeder Runde wird Ihnen zunächst eine Lotterie angezeigt. Sie müssen dann entscheiden, ob Sie diese Lotterie behalten möchten, oder ob Sie die Auszahlungen der Lotterie anpassen wollen. Näheres dazu erklären wir Ihnen auf dem nächsten Bildschirm. 
+	</p>
+	<p>
+		Eine Runde endet sobald Sie eine Lotterie ausgewählt haben. Diese Lotterie wird dann gespielt, das heißt es wird zufällig das „grüne“ oder das „gelbe“ Ereignis gezogen. Sie erfahren nicht, welches der beiden Ergebnisse gezogen wurde. Lediglich für die Runde, die am Ende des Experiments zur Auszahlung ausgewählt werden, erfahren Sie den Ausgang der Lotterie. 
 	</p>
 
 	{% next_button %}
