@@ -1,0 +1,69 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Voting
+{% endblock %}
+
+{% block content %}
+    <div style=" border: solid; border-color: #f6f6f6; padding-left: 0px; width: 65%">
+
+         <table class="table" style="font-size: 12px">
+                <tr>
+                    <td>You are <b>{{ player.label }}</b></td>
+                    <td>Current round is <b>Round {{ player.round_number }}</b></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+         </table>
+
+
+
+         <div style=" margin-left: 15px" >
+            {% if player.treatment == 'inclusion' %}
+
+                Which players do you want to play the second game of this round?
+                <br>
+                You have to invite 3 or 4 players.
+                <br><br>
+
+                Players who shall play the next round:
+                {% if player.label != 'Player A' %}{% formfield player.invite_A %}{% endif %}
+                {% if player.label != 'Player B' %}{% formfield player.invite_B %}{% endif %}
+                {% if player.label != 'Player C' %}{% formfield player.invite_C %}{% endif %}
+                {% if player.label != 'Player D' %}{% formfield player.invite_D %}{% endif %}
+                {% if player.label != 'Player E' %}{% formfield player.invite_E %}{% endif %}
+
+            {% elif player.treatment == 'exclusion' %}
+
+                Which players do you want to play the second game of this round?
+                <br>
+                If you want, you can exclude one player by unchecking the box.
+                <br><br>
+
+                 Players who shall play the next round:
+                {% if player.label != 'Player A' %}{% formfield player.exclude_A %}{% endif %}
+                {% if player.label != 'Player B' %}{% formfield player.exclude_B %}{% endif %}
+                {% if player.label != 'Player C' %}{% formfield player.exclude_C %}{% endif %}
+                {% if player.label != 'Player D' %}{% formfield player.exclude_D %}{% endif %}
+                {% if player.label != 'Player E' %}{% formfield player.exclude_E %}{% endif %}
+
+            {% endif %}
+         </div>
+
+    </div>
+    <br>
+    {% next_button %}
+{% endblock %}
+
+
+{% block scripts %}
+    <style type="text/css">
+        .otree-body{margin-top: 0px}
+        .otree-body{padding-top: 0px}
+        .page-header {padding-top: 0px;padding-bottom: 0px}
+        .otree-title{font-size: 20px}
+    </style>
+{% endblock %}

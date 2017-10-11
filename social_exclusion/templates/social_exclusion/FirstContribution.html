@@ -1,0 +1,47 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+     First Contribution
+{% endblock %}
+
+{% block content %}
+    <div style=" border: solid; border-color: #f6f6f6; padding-left: 0px; width: 65%">
+         <table class="table" style="font-size: 12px">
+                <tr>
+                    <td>You are <b>{{ player.label }}</b></td>
+                    <td>Current round is <b>Round {{ player.round_number }}</b></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+         </table>
+
+
+        <div style=" margin-left: 15px" >
+            <br>
+            This is the first game of this round. <br>
+            All five players play the game. <br>
+            You can now decide hoch much you want to contribute to the project.
+            <br>
+            <br><br>
+            <br>
+            {% formfield player.cont_first %}
+        </div>
+
+    <br>
+    </div>
+    <br>
+    {% next_button %}
+{% endblock %}
+
+
+{% block scripts %}
+    <style type="text/css">
+        .otree-body{margin-top: 0px}
+        .otree-body{padding-top: 0px}
+        .page-header {padding-top: 0px;padding-bottom: 0px}
+        .otree-title{font-size: 20px}
+    </style>
+{% endblock %}

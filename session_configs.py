@@ -37,4 +37,25 @@ SESSION_CONFIGS = [
         'participation_fee': 3.00,
         'main_task_rounds': 10
     },
+
+    {
+        'name': 'socialinclusion',
+        'display_name': 'social_inclusion_treatment',
+        'num_demo_participants': 5,
+        'app_sequence': ['social_exclusion'],
+        'treatment': 'inclusion',
+        'city': 'heidelberg'
+
+    },
+    {
+        'name': 'socialexclusion',
+        'display_name': 'social_exclusion_treatment',
+        'num_demo_participants': 5,
+        'app_sequence': ['social_exclusion'],
+        'treatment': 'exclusion',
+        'city': 'heidelberg'
+    }
+
+
+
 ]
