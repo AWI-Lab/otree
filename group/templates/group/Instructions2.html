@@ -1,0 +1,34 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Teil 2 - Instruktionen (2/3)
+{% endblock %}
+
+{% block styles%}
+    <style type="text/css">
+        .controls label {
+            margin-right: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <p><strong>Anlagemöglichkeiten</strong><p>
+    <p>Der Finanzberater entscheidet, welcher Anteil des gesamten Vermögens des Kunden in folgende riskante Anlagemöglichkeit investiert wird. Den nicht-investierten Anteil des Vermögens behält der Kunde sicher. Die riskante Anlage hat ein gutes und ein schlechtes Ergebnis:</p>
+
+    <p>Mit einer Wahrscheinlichkeit von 1/3 erhält der Kunde eine Rendite von +250% auf das investierte Kapital. <br />
+    Seine Auszahlung beträgt in diesem Fall: 10€ + 2,5 * Investment.</p>
+
+    <p>Mit einer Wahrscheinlichkeit von 2/3 erhält der Kunde eine Rendite von -100% auf das investierte Kapital.<br />
+    Seine Auszahlung beträgt in diesem Fall: 10€ - Investment.</p>
+
+    <p><strong>Kontrollfragen</strong></p>
+    {% formfield player.question_3  label="Nehmen Sie an, für einen Kunden wurden 4€ in die riskante Anlage investiert und die Investition war erfolgreich.  <br/>Welche Auszahlung erhält der Kunde?" %}
+
+    {% formfield player.question_4  label="Nehmen Sie an, für einen Kunden wurden 6€ in die riskante Anlage investiert und die Investition war nicht erfolgreich. <br/>Welche Auszahlung erhält der Kunde?" %}
+
+    <div align="right">{% next_button %}</div>
+
+{% endblock %}

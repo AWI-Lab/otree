@@ -1,0 +1,96 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static "group/jquery-ui.min.css" %}">
+    <link rel="stylesheet" href="{% static "group/category.css" %}">
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static "group/jquery-ui.min.js" %}"></script>
+    <script src="{% static "group/category.js" %}"></script>
+{% endblock %}
+
+{% block title %}
+    Teil 1
+{% endblock %}
+
+{% block content %}
+    <p>Banken verwenden häufig die folgenden fünf Begriffe für verschiedene Geldanlagestrategien:</p>
+    <div id="category_center_box">
+        <div id="category_box">
+            <div class="category_label_container">
+                <div class="category_label" id="a">
+                    <div class="label">sehr konservativ</div>
+                    <div class="category_label_handle handle_right"></div>
+                </div>
+            </div>
+            <div class="category_label_container">
+                <div class="category_label" id="b">
+                    <div class="label">sicherheitsorientiert</div>
+                    <div class="category_label_handle handle_right"></div>
+                </div>
+            </div>
+            <div class="category_label_container">
+                <div class="category_label" id="c">
+                    <div class="label">ausgeglichten</div>
+                    <div class="category_label_handle handle_right"></div>
+                </div>
+            </div>
+            <div class="category_label_container">
+                <div class="category_label" id="d">
+                    <div class="label">wachstumsorientiert</div>
+                    <div class="category_label_handle handle_right"></div>
+                </div>
+            </div>
+            <div class="category_label_container">
+                <div class="category_label" id="e">
+                    <div class="label">offensiv</div>
+                    <div class="category_label_handle handle_right"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p style="clear:both;">Nehmen Sie an es gäbe eine riskante Geldanlagemöglichkeit, in die ein beliebiger Teil Ihres Gesamtvermögens investiert werden kann. Der nicht investierte Teil verbleibt sicher angelegt.</p>
+    <p>Die folgende Skala misst, welcher Anteil des Vermögens in die riskante Anlage investiert wird.</p>
+
+    <div id="super_box">
+        <div id="left_axis_label" class="axis_label">0%</div>
+        <div id="right_axis_label" class="axis_label">100%</div>
+        <div id="axis_box">
+            <hr id='axis_line'> 
+            <div id="axis">
+
+            </div>
+        </div>
+        
+    </div>
+
+    <ul>
+        <li>0% bedeutet, dass nichts in die riskante Anlage investiert wird.</li>
+        <li>50% bedeutet, dass die Hälfte des Vermögens in die riskante Anlage investiert wird.</li>
+        <li>100% bedeutet, dass das gesamte Vermögen in die riskante Anlage investiert wird.</li>
+    </ul>
+
+
+    <p>Bitte bringen Sie die fünf Strategien mit den Investitionsanteilen in die riskante Anlage in Verbindung. Ziehen Sie dazu nacheinander, beginnenend mit der ersten, die einzelnen Boxen mit der Maus auf die Skala. Im Anschluss passen Sie die Größe, d.h. den jeweils abgedeckten Investitionsbereich der einzelnen Strategien, durch Ziehen mit der Maus an den Schnittstellen der Elemente (orange hervorgehoben) an. Die Reihenfolge ist fest vorgegeben und die fünf Strategien müssen die gesamte Spanne von 0% bis 100% abdecken.</p>
+
+    <p>Es gibt bei dieser Aufgabe keine richtigen oder falschen Anordnungen. Wir bitten Sie die Strategien so auf der Skala der möglichen Investitionsanteile zu verteilen, dass die jeweils abgedeckten Investitionsbereiche Ihrem persönlichen Verständnis der Begriffe entsprechen. </p>
+
+    <input type="hidden" name="cat_end_rel_1" id="id_cat_end_rel_1">
+    <input type="hidden" name="cat_end_rel_2" id="id_cat_end_rel_2">
+    <input type="hidden" name="cat_end_rel_3" id="id_cat_end_rel_3">
+    <input type="hidden" name="cat_end_rel_4" id="id_cat_end_rel_4">
+    <input type="hidden" name="cat_end_rel_5" id="id_cat_end_rel_5">
+
+    <input type="hidden" name="cat_end_abs_1" id="id_cat_end_abs_1">
+    <input type="hidden" name="cat_end_abs_2" id="id_cat_end_abs_2">
+    <input type="hidden" name="cat_end_abs_3" id="id_cat_end_abs_3">
+    <input type="hidden" name="cat_end_abs_4" id="id_cat_end_abs_4">
+    <input type="hidden" name="cat_end_abs_5" id="id_cat_end_abs_5">
+
+    <p>Klicken Sie auf „Weiter“ um zum zweiten Teil des Experiments zu gelangen.</p>
+
+    <div align="right">{% next_button %}</div>
+
+{% endblock %}

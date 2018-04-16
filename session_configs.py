@@ -37,23 +37,55 @@ SESSION_CONFIGS = [
         'participation_fee': 3.00,
         'main_task_rounds': 10
     },
+    {
+        'name': 'single_fixed',
+        'display_name': "RiskOther - SINGLE Fixed",
+        'num_demo_participants': 2,
+        'participation_fee': 3.00,
+        'app_sequence': ['single'],
+        'compensation': 'fixed',     # Enter either fixed, variable_result or variable_profit
+    },
+    {
+        'name': 'single_result',
+        'display_name': "RiskOther - SINGLE Variable Result",
+        'num_demo_participants': 2,
+        'participation_fee': 3.00,
+        'app_sequence': ['single'],
+        'compensation': 'variable_result',     # Enter either fixed, variable_result or variable_profit
+    },
+    {
+        'name': 'single_profit',
+        'display_name': "RiskOther - SINGLE Variable Profit",
+        'num_demo_participants': 2,
+        'participation_fee': 3.00,
+        'app_sequence': ['single'],
+        'compensation': 'variable_profit',     # Enter either fixed, variable_result or variable_profit
+    },
+    {
+        'name': 'group_fixed',
+        'display_name': "RiskOther - GROUP Treatment Fix",
+        'num_demo_participants': 6,
+        'participation_fee': 3.00,
+        'app_sequence': ['group'],
+        'compensation': 'fixed',     # Enter either fixed, variable_result or variable_profit
 
-    # {
-    #     'name': 'socialinclusion',
-    #     'display_name': 'social_inclusion_treatment',
-    #     'num_demo_participants': 5,
-    #     'app_sequence': ['social_exclusion'],
-    #     'treatment': 'inclusion',
-    #     'city': 'heidelberg'
+    },
+    {
+        'name': 'group_result',
+        'display_name': "RiskOther - GROUP Treatment Variable Result",
+        'num_demo_participants': 6,
+        'participation_fee': 3.00,
+        'app_sequence': ['group'],
+        'compensation': 'variable_result',     # Enter either fixed, variable_result or variable_profit
 
-    # },
-    # {
-    #     'name': 'socialexclusion',
-    #     'display_name': 'social_exclusion_treatment',
-    #     'num_demo_participants': 5,
-    #     'app_sequence': ['social_exclusion'],
-    #     'treatment': 'exclusion',
-    #     'city': 'heidelberg'
-    # }
+    },
+    {
+        'name': 'group_profit',
+        'display_name': "RiskOther - GROUP Treatment Variable Profit",
+        'num_demo_participants': 6,
+        'participation_fee': 3.00,
+        'app_sequence': ['group'],
+        'compensation': 'variable_profit',     # Enter either fixed, variable_result or variable_profit
 
+    }
 ]

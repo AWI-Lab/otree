@@ -1,0 +1,32 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Letzte Seite
+{% endblock %}
+
+{% block content %}
+
+    <p>
+    	Ihre heutige Auszahlung setzt sich wie folgt zusammen:
+    </p>
+
+    <p>
+    	Bezahlung für pünktliches Erscheinen: {{ player.participation_fee }}
+    </p>
+
+    <p>
+    	Ergebnis aus Teil 2: {{ player.payoff }}
+    </p>
+
+    <p>
+    	Auszahlung ingesamt: <strong>{{ participant.payoff_plus_participation_fee }}</strong>
+    </p>
+
+
+    <p>
+    	Vielen Dank für Ihre Teilnahme an diesem Experiment. Bitte bleiben Sie an Ihrem Platz sitzen, bis wir Sie anhand der Platznummer zur Auszahlung aufrufen. Sie können bereits Ihre Quittung ausfüllen.
+    </p>
+
+
+{% endblock %}

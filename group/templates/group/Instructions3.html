@@ -1,0 +1,30 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %} 
+    Teil 2 - Instruktionen (3/3)
+{% endblock %}
+
+{% block styles%}
+    <style type="text/css">
+        .controls label {
+            margin-right: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <p><strong>Ablauf</strong></p>
+    <p>In diesem Experiment werden zunächst alle Teilnehmer beide Rollen annehmen: Die Rolle des Kunden und die Rolle des Finanzberaters. 
+    Jeder Teilnehmer ist zunächst Kunde und wählt einen der fünf Begriffe aus Teil 1 aus, um seinen Investitionswunsch zu signalisieren.<br/>
+    Dann nimmt jeder Teilnehmer die Rolle eines Finanzberaters ein und trifft die Investitionsentscheidungen für seine Kunden.</p>
+    <p>Der Computer wählt dann zufällig einen Teil der Teilnehmer aus, deren Beratungsentscheidung auszahlungsrelevant wird. Das heißt, die ausgewählten Teilnehmer erhalten die Auszahlung für ihre Entscheidung als Finanzberater. Die anderen, nicht ausgewählten Teilnehmer erhalten die Auszahlung für Ihre Rolle als Kunde und bekommen entsprechend das aus der Entscheidung ihres Finanzberaters resultierende Investitionsergebnis.</p>
+
+    <p><strong>Kontrollfragen</strong></p>
+    {% formfield player.question_5 label="Die Teilnehmer in diesem Experiment nehmen nacheinander beide Rollen ein. Für jeden Teilnehmer sind sowohl die Entscheidung als Kunde, als auch als Berater auszahlungsrelevant." %}
+    
+    {% formfield player.question_6 label="Ein einziger Zufallszug bestimmt für alle Teilnehmer des Experiments darüber, ob die riskante Anlage erfolgreich oder nicht erfolgreich ist." %}
+
+    <div align="right">{% next_button %}</div>
+
+{% endblock %}

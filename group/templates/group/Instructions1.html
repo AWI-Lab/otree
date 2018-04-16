@@ -1,0 +1,47 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Teil 2 - Instruktionen (1/3)
+{% endblock %}
+
+{% block styles%}
+    <style type="text/css">
+        .controls label {
+            margin-right: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <p>Sie beginnen nun mit dem zweiten Teil des Experiments. Wir machen Sie zunächst mit den beiden Rollen dieses Studienteils vertraut: <em>Kunden</em> und <em>Finanzberater</em>.</p>
+
+    <p><strong>Kunden</strong></p>
+    <p>Kunden besitzen {{ Constants.endowment_principals }}, die investiert werden sollen. Sie treten daher in Kontakt mit einem Finanzberater, dem sie mitteilen, wie die Anlageentscheidung für sie getroffen werden soll. Dazu wählen sie eine der fünf Anlagestrategien aus, die sie bereits in Teil 1 kennengelernt haben. Am Ende erhalten Kunden als Auszahlung das Ergebnis der für sie getroffenen Investition. Sie können ihrem Finanzberater dann eine Nachricht schicken, in der sie ihre Zufriedenheit oder Unzufriedenheit mit seiner Entscheidung ausdrücken.</p>
+    
+    <p><strong>Finanzberater</strong></p>
+    <p>Finanzberater treffen die Investitionsentscheidung für ihre Kunden. Sie erhalten dazu von ihren Kunden eine Mitteilung, welche Anlagestrategie verfolgt  werden soll. Finanzberater sind an diese Mitteilung jedoch nicht gebunden, sondern entscheiden frei. 
+
+    {% if player.compensation == "fixed" %}
+    	Am Ende erhalten Finanzberater als Auszahlung einen fixen Betrag in Höhe von {{ Constants.fixed_payment }}.
+
+    {% elif player.compensation == "variable_result" %}
+    	Am Ende erhalten Finanzberater als Auszahlung einen fixen Betrag in Höhe von {{ Constants.fixed_payment }} und einen prozentualen Anteil am Investitionsergebnis ihrer Kunden.
+
+    {% elif player.compensation == "variable_profit" %}
+    	Am Ende erhalten Finanzberater als Auszahlung einen fixen Betrag in Höhe von {{ Constants.fixed_payment }} und einen prozentualen Anteil an der Rendite ihrer Kunden.
+
+    {% endif %}
+
+    Finanzberater erhalten die Nachricht zur Zufriedenheit bzw. Unzufriedenheit ihrer Kunden.</p>
+    
+
+    <p><strong>Kontrollfragen</strong></p>
+    {% formfield player.question_1 label="Finanzberater entscheiden, welcher Anteil der 10 € ihrer Kunden in die riskante Anlage investiert werden soll." %}
+    
+    {% formfield player.question_2 label="Nachdem sie das Ergebnis erfahren haben, können Finanzberater eine Nachricht an Ihre Kunden schicken." %}
+    
+
+    <div align="right">{% next_button %}</div>
+
+{% endblock %}

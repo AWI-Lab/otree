@@ -1,0 +1,85 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Sie treffen nun die Entscheidung als Kunde
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static "single/category.css" %}">
+    <style type="text/css">
+        .category_label:hover {
+/*          border: 2px dashed orange; */
+            color: orange;
+        }
+
+        .label {
+            cursor: pointer !important;
+        }
+
+        .sel {
+            /*border: 2px solid red;*/
+            color: orange;
+        }
+    </style>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        $('.otree-btn-next').hide();
+        $('.category_label').on('click', function (event) {
+            // console.log(event);
+            $('.category_label').removeClass('sel');
+            $(event.delegateTarget).addClass('sel');
+
+            var names = {
+                'a': "sehr konservativ",
+                'b': "sicherheitsorientiert",
+                'c': "ausgeglichen",
+                'd': "wachstumsorientiert",
+                'e': "offensiv",
+            }
+
+            $('#id_category').val(names[event.currentTarget.id]);
+            $('.otree-btn-next').show();
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+
+    <p>Bitte wählen Sie die Anlagestrategien aus, die Ihr späterer Berater für Sie umsetzen soll.</p><p>Klicken Sie dazu direkt auf die Strategie. Orange Schrift markiert Ihre Auswahl. Zur Erinnerung ist Ihre Einteilung aus Teil 1 nochmals dargestellt. Ihr Berater erfährt nur die ausgewählte Strategie. Er erfährt Ihre Einteilung nicht.</p>
+
+    <div id="super_box">
+        <div id="left_axis_label" class="axis_label">0%</div>
+        <div id="right_axis_label" class="axis_label">100%</div>
+        <div id="axis_box">
+            <div class="category_label" id="a" style="width: {{ width_a }}px; margin-right: 0px;">
+                <div class="label">sehr konservativ</div>
+                <div class="category_label_handle handle_right"></div>
+            </div>
+            <div class="category_label" id="b" style="width: {{ width_b }}px; margin-right: 0px;">
+                <div class="label">sicherheitsorientiert</div>
+                <div class="category_label_handle handle_right"></div>
+            </div>
+            <div class="category_label" id="c" style="width: {{ width_c }}px; margin-right: 0px;">
+                <div class="label">ausgeglichen</div>
+                <div class="category_label_handle handle_right"></div>
+            </div>
+            <div class="category_label" id="d" style="width: {{ width_d }}px; margin-right: 0px;">
+                <div class="label">wachstumsorientiert</div>
+                <div class="category_label_handle handle_right"></div>
+            </div>
+            <div class="category_label" id="e" style="width: {{ width_e }}px; margin-right: 0px;">
+                <div class="label">offensiv</div>
+                <div class="category_label_handle handle_right"></div>
+            </div>
+        </div>
+    </div>
+    <p>&nbsp;</p>
+
+    <input type="hidden" id="id_category" name="category"/>
+
+    <div align="right">{% next_button %}</div>
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Ergebnis
+{% endblock %}
+
+{% block content %}
+	<p>
+		Der Computer hat Ihnen folgende Rolle zugewiesen: <strong>Finanzberater</strong>
+	</p>
+	<p>
+		Ihr Kunde hat Ihnen den Begriff <em>{{ player.category_from_principal }}</em> kommuniziert.
+	</p>
+	<p>
+		Sie haben entschieden für Ihren Kunden {{ player.invested_amount }} in die riskante Anlage zu investieren.
+	</p>
+	<p>
+	{% if player.outcome_of_principal == 1 %}
+
+		Die Investition war erfolgreich.
+
+	{% elif player.outcome_of_principal == 0 %}
+
+		Die Investition war nicht erfolgreich.
+
+	{% endif %}
+	</p>
+	<p>
+		Die Auszahlung Ihres Kunden aus Teil 2 beträgt daher {{ player.payoff_of_principal }}.
+
+	</p>
+
+	<p>
+	{% if player.compensation == "fixed" %}
+
+		Sie erhalten eine feste Bezahlung von <strong>{{ player.payoff }}</strong>
+
+	{% elif player.compensation == "variable_result" %}
+
+		Sie erhalten eine feste Bezahlung von {{ Constants.variable_payment }} und werden zusätzlich mit {{ Constants.share_result }}% am Ergebnis Ihres Kunden beteiligt.<br/>
+		Ihre Bezahlung beträgt daher <strong>{{ player.payoff }}</strong>.
+
+	{% elif player.compensation == "variable_profit" %}
+
+		Sie erhalten eine feste Bezahlung von {{ Constants.variable_payment }} und werden zusätzlich mit {{ Constants.share_profit }}% am Gewinn Ihres Kunden beteiligt.<br/>
+		Ihre Bezahlung beträgt daher <strong>{{ player.payoff }}</strong>.
+
+	{% endif %}
+	</p>
+	<p>&nbsp;</p>
+
+	<p>Ihr Kunde teilt Ihnen mit:</p>
+	<p style="text-align: center;"><em>{{ player.message_from_principal }}</em></p>
+
+
+
+	</p>
+    <div align="right">{% next_button %}</div>
+{% endblock %}
+
+
+
+
+
+	
+
+

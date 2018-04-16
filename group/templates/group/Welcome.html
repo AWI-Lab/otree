@@ -1,0 +1,17 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Herzlich Wilkommen
+{% endblock %}
+
+{% block content %}
+
+    <p><strong>Liebe Studienteilnehmerin, </strong><br /> <strong>Lieber Studienteilnehmer,</strong></p>
+    <p>für Ihr pünktliches Erscheinen erhalten Sie nun bereits {{ player.participation_fee }}. Das gesamte Experiment wird voraussichtlich ca. {{ Constants.duration }} min dauern. Beim heutigen Experiment sind Hilfsmittel und Kommunikation der Teilnehmer untereinander untersagt. Sollten Sie zu einem Zeitpunkt Fragen haben, heben Sie bitte die Hand. Ein Studienleiter wird dann zur Beantwortung an Ihren Platz kommen.</p>
+    <p>Das Experiment besteht aus insgesamt zwei Teilen, die Sie nacheinander durchlaufen werden. Beide Teile können Ihren Verdienst beeinflussen und sich somit auf Ihre endgültige Auszahlung auswirken. Am Ende des Experiments folgt ein kurzer Fragebogen.</p>
+    <p>Die Auswertung des Experiments erfolgt anonym, es werden keine persönlichen Informationen mit den Daten aus dem Experiment verknüpft. Es können somit keine Rückschlüsse auf Ihre Person gezogen werden. Am Ende des Experiments unterschreiben Sie eine Quittung. Diese benötigen wir ausschließlich zu Abrechnungszwecken. Für bessere Lesbarkeit wird im Text die männliche Form gewählt, nichtsdestotrotz beziehen sich die Angaben auf Angehörige aller Geschlechter.</p>
+
+    <div align="right">{% next_button %}</div>
+
+{% endblock %}

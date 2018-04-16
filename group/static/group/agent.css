@@ -1,0 +1,16 @@
+.slider-track {
+    background: #ddd;
+}
+.slider-selection {
+    background: #aaa;
+}
+
+.slider-label-left {
+    font-size: 12px;
+    margin-right: 15px;
+}
+
+.slider-label-right {
+    font-size: 12px;
+    margin-left: 15px;
+}

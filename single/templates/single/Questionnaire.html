@@ -1,0 +1,42 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Demografische Daten
+{% endblock %}
+
+{% block styles%}
+    <style type="text/css">
+        .controls label {
+            margin-right: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+	<p>
+		Bitte beantworten Sie uns abschließend folgende Fragen zu Ihrer Person:
+	</p>
+
+	<p>
+		{% formfield player.age %}
+	</p>
+	<p>
+		{% formfield player.gender %}
+	</p>
+	<p>
+		{% formfield player.studies %}
+		{% formfield player.nonstudent %}
+	</p>
+	<p>
+		{% formfield player.financial_advice %}
+	</p>
+	<p>
+		{% formfield player.income %}
+	</p>
+
+
+    <div align="right">{% next_button %}</div>
+
+{% endblock %}
